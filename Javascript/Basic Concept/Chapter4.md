@@ -1,0 +1,218 @@
+## 4. 객체와 배열, 함수의 기초
+### 4.1 객체 
+ 자바스크립트에서는 원시 타입을 제외한 모든 값이 객체임. 객체는 이름과 값을 한 쌍으로 묶은 데이터(프로퍼티)를 여러 개 모은 것.  
+- 객체의 생성, 프로퍼티 추가/삭제/존재 확인
+ ```javascript
+   var card = {suit: "heart", rank : "A"}; // 객체 리터럴로 객체 생성
+   
+   card.value = 14; //   프로퍼티 추가 : 없는 프로퍼티 이름에 값을 대입하면 새로운 프로퍼티가 추가됨. 
+   console.log(card) // Object {suit: "heart", rank : "A", value :14}
+   
+   delete card.rank; //프로퍼티 삭제 : delete 연산자 사용. 
+   console.log(card) // Object {suit: "heart", value :14}
+   
+   console.log("suit" in card) // in 연산자로 프로퍼티 존재 여부 확인
+   ```
+<!-- 20201220 기록 마침
+     자바스크립트 책의 앞 부분이어서 그런지, 아직 너무 기초적인 내용이다. 하지만 가끔씩 모르는 내용이 나오는 것을 보아, 기초가 아직 다져지지 않은 것 같다.
+     내일은 4장을 마저 공부하고, 복습하는 시간을 가져야겠다.-->     
+<!-- 20201221 기록 시작-->
+
+- 메서드  
+  프로퍼티에 저장된 값의 타입이 함수일 경우, 그 프로퍼티를 메서드라고 부름.  
+  일반적으로 메서드가 속한 객체의 내부 데이터 상태를 바꾸는 용도로 사용.  
+  함수 객체 안에 적힌 this는 그 함수를 메서드로 가지고 있는 객체를 가리킴.  
+  
+- 생성된 객체는 메모리의 영역을 차지하는 한 덩어리가 됨. 객체 타입의 값을 변수에 대입하면 그 변수에는 객체의 참조가 저장됨.
+
+  ```javascript
+   var p = {x : 1.0, y : 2.0}; //p는 객체를 참조하고 있음
+
+   var p2 = p;
+   p2.x = 2.0; // p2는 p객체를 참조하므로 p2로 p객체를 읽거나 수정할 수 있음
+   console.log(p.x); //2
+   console.log(p2.x); //2
+
+   ```
+
+### 4.2 함수
+- 함수 정의
+  - 함수 선언문으로 정의 (호이스팅 대상)
+   ```javascript
+    function square(x) {return x*x;}
+   ```
+   
+   - 함수 리터럴로 함수 정의 (호이스팅 대상 아님)
+   ```javascript
+    var square(x) = function(x){return x*x;}
+   ```
+     위 코드에서 function(x){...} 부분이 함수 리터럴임.  
+     함수 리터럴은 이름이 없는 함수이므로 익명 함수, 무명 함수라고 부름.
+     메서드를 정의할 때는 프로퍼티 값으로 함수 리터럴을 대입함.
+   
+- 함수 호출 : 함수 이름 뒤에 소괄호로 인수를 묶어 입력  
+  - 인수 : 함수를 호출할 때 전달하는 값
+  - 인자 : 함수 정의문의 인수
+   ```javascript
+    square(3); //9
+   ```
+ 
+- 일반적인 함수의 실행 흐름
+  - 인수가 함수 정의문의 인자에 전달됨
+  - 함수 정의문의 중괄호 안에 작성된 프로그램이 실행됨
+  - return 문이 실행되면 호출한 코드로 돌아감 (return 값은 함수의 반환값이 됨)
+  - return 문이 실행되지 않은 상태로 마지막 문장이 실행되면, 호출한 코드로 돌아간 후에 undefined가 함수의 반환값이 됨
+
+- 값으로서의 함수  
+  함수 선언문으로 함수를 선언하면 내부적으로 그 함수 이름을 변수 이름으로 한 변수와 함수 객체가 만들어지고, 그 변수에 함수 객체의 참조가 저장됨.
+   ```javascript
+    var sq = square;
+    console.log(sq(3));//9
+   ```
+- 참조에 의한 호출/값에 의한 호출  
+  함수는 원시 값을 인수로 넘겼을 때와 객체를 인수로 넘겼을 때 다르게 동작함.
+  ```javascript
+   //값의 전달
+   function add1(x) { return x = x+1;}
+   var a = 3;
+   var b = add1(a); //변수 a의 복사본이 인자 x에 할당. 인수에 원시 값을 넘기면 그 값 자체가 인자에 전달됨.
+   //변수 a와 변수 x는 서로 다른 영역의 메모리에 위치함.
+
+   console.log(b); //4
+
+   //참조 전달
+   function add2(p) { p.x = p.x+1; p.y = p.y+1; return p;}
+   var c = {x:1, y:2};
+   var d = add2(c); //변수 c의 복사본이 인자 p에 할당. 변수 c에 객체 {x:2, y:3}의 참조가 저장되어 있으므로, 이 참조 값을 p에 전달
+   // 인수로 객체를 넘겼을 때 전달되는 값은 참조 값. 따라서 c.x를 수정하는 것은 d.x를 수정하는 것과 같음.
+
+   console.log(c,d); // {x:2, y:3} {x:2, y:3}
+
+  ```
+  
+- 변수의 유효 범위  
+  - 전역 변수 : 함수 바깥에서 선언된 변수로 유효 범위는 전체 프로그램임  
+  - 지역 변수 : 함수 안에서 선언된 변수로 유효 범위는 변수가 선언된 함수 내부임  
+  - 변수의 충돌 : 전역 변수와 지역 변수의 이름이 같으면, 전역 변수를 숨기고 지역 변수를 사용하게 됨
+    ```javascript
+    var a = 'global';
+    function f(){
+     var a = 'local';
+     console.log(a);
+    }
+    f();   //local
+    console.log(a);//global
+    ```
+<!--20201221 기록 끝
+    4장 공부는 했는데 기록하는데 시간이 조금 많이 소요된다. 최대한 간단하게 쓰고있는데... 2회독 할때는 시간이 줄길 바라며.. 화이팅-->
+<!--20201222 기록 시작-->
+
+- let과 const
+  - let : 블록 유효 범위를 갖는 지역 변수를 선언.  
+    - 호이스팅 대상이 아님. let 문으로 똑같은 이름을 가진 변수를 선언하면 문법 오류가 발생.
+  - const : 블록 유효 범위를 가지면서 상수를 선언.
+    - 호이스팅 대상이 아님. let 문으로 선언한 변수처럼 동작함. 단, 반드시 초기화해야 한다는 차이점이 있음.
+    
+- 함수 활용의 장점
+  - 재사용성을 높일 수 있다
+  - 프로그램 이해도를 높일 수 있다
+  - 프로그램 수정이 간단해진다
+  
+### 4.3 생성자
+ - 생성자라는 함수로 객체를 생성할 수 있음
+ 
+   ```javascript
+   function Fruit(name, count){
+    this.name = name;
+    this.count = count;
+   }
+
+   var apple = new Fruit('apple', 1); //생성자로 객체 생성할 때는 new 연산자 사용
+   ```
+  위 코드를 사용하면 name 프로퍼티에는 'apple', count 프로퍼티에는 1이 저장된 객체가 생성되고, 그 객체의 참조가 변수 apple에 할당됨.
+  
+### 4.4 내장 객체
+ - 내장 객체 리스트
+   참고 URL : https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects
+ 
+<!--20201222 기록 끝
+   내일 드디어 4장을 끝내고 5장에 들어간다. 조금씩이지만 매일 공부하자-->
+<!--20201223 기록 시작-->
+### 4.5 배열의 기초
+ - 배열 생성
+   ```javascript
+    var fruits = ['apple','banana', 'orange'];
+    
+    // 배열 요소에 인덱스로 접근하기 위해서는 대괄호 연산자를 사용함.
+    console.log(fruits[0]); //apple
+   ```
+  - 배열의 길이 구하기  
+    length 프로퍼티에는 배열 요소의 최대 인덱스 값+1이 담겨있음.
+    ```javascript
+     fruits.length; //3
+    ```
+    length 프로퍼티에 현재 배열 요소 개수보다 작고 0보다 큰 정수 값을 대입하면 배열 길이가 줄어듦. 
+    
+    ```javascript
+     fruits.length = 1;
+     console.log(fruits); // ["apple"]
+    
+    ```
+    위와 같이 1보다 큰 인덱스에 할당되었던 요소는 삭제됨.  
+    
+    length 프로퍼티에 현재 배열 요소보다 큰 정수 값을 대입하면 배열에 새로운 요소가 추가되지 않고, length 값만 바뀐다.  
+    
+    ```javascript
+     fruit.length = 3;
+     console.log(fruits); // ["apple", empty*2];
+    ```
+   - Array 생성자로 생성하기
+  
+   ```javascript
+      var fruits = new Array('apple','banana');
+    
+      // Array 생성자의 인수가 한 개고 그 값이 양의 정수이면, 그 길이만큼 배열이 생성됨
+      var x = new Array(3);
+      console.log(x.length); // 3
+   ```
+   - 배열은 객체
+    자바스크립트의 배열은 Array 객체이며 객체로 배열의 기능을 흉내낸것. Array 객체는 배열의 인덱스를 문자열로 변환해서 그것을 프로퍼티로 이용함.
+    따라서 다음과 같은 방법으로도 접근할 수 있음.
+    
+     ```javascript
+     var fruits = ["apple","banana", "orange"];
+     console.log(fruits["0"]); //apple
+     ```
+  
+   - 배열 요소의 추가와 삭제
+   
+     ```javascript
+     //추가
+     var fruits = ["apple","banana", "orange"];
+     fruits[3] = "melon";
+     console.log(fruits); // ["apple", "banana", "orange", "melon"]
+
+     fruits.push("peach");
+     console.log(fruits); // ["apple", "banana", "orange", "melon", "peach"]
+
+     //삭제 
+     delete fruits[0];
+     console.log(fruits); // [undefined, "banana", "orange", "melon", "peach"]
+     console.log(fruits.length); //5  요소를 삭제해도 length 프로퍼티 값은 바뀌지 않음.
+     ```
+     
+   - 희소 배열
+      배열에 요소를 추가하거나 제거하여 인덱스가 0부터 시작되지 않는 배열
+     
+      ```javascript
+      var fruits = ["apple","banana", "orange"];
+      fruits[4] = "melon";
+      console.log(fruits); // ["apple", "banana", "orange", undefined, "melon"]
+      //fruits[3] 값이 undefined 라고 표시되지만 실제로 없는 값.
+      ```
+   
+     배열 요소가 있는지 확인하는 방법 : fruits.hasOwnProperty("3") 값을 확인.
+      <!--20201223 기록 끝 
+회사에서 값이 있는지 확인할때 값이 undefined와 같은지 확인했던 것 같은데, 앞으로는 hasOwnProperty 함수를 써봐야겠다.-->
+
+     
