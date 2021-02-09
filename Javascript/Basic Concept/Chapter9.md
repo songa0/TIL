@@ -551,8 +551,61 @@
     console.log(Object.getOwnPropertyNames(person)); // ["name", "age", "sayHello"]
     
     ```
- <!--20210206 기록 마침 목요일에 10시까지 야근하고 와서 금요일 저녁에 너무 피곤해서 커밋을 못했다...-->   
-  
+ <!--20210206 기록 마침 목요일에 10시까지 야근하고 와서 금요일 저녁에 너무 피곤해서 커밋을 못했다...-->  
+ 
+ <!--20210209 기록 시작-->
+### 9.7 객체 잠그기  
+  - 확장 가능 속성   
+    객체의 확장 가능 속성은 객체에 새로운 프로퍼티를 추가할 수 있는지를 결정함  
+    확장 가능 속성 값이 true로 설정된 객체에는 새로운 프로퍼티를 추가할 수 있지만 false로 설정된 객체에는 추가할 수 없음  
+    (사용자가 정의한 객체와 내장 객체는 기본적으로 확장이 가능하지만 호스트 객체의 확장 가능 속성은 자바스크립트 실행 환경에 따라 설정된 값이 다름)  
+    
+  - 확장 방지  
+    Object.preventExtension 메서드는 인수로 받은 객체를 확장할 수 없게 만듦  
+    ```javascript
+      var person = {name : "Tom"};
+      Object.preventExtensions(person);
+      person.age = 17;
+      console.log("age" in person); //false
+      console.log(Object.isExtensible(person)); //false
+    ```
+    
+  - 밀봉   
+    Object.seal 메서드는 인수로 받은 객체를 밀봉함  
+    밀봉이란 객체에 프로퍼티를 추가하는 것을 금지하고 기존의 모든 프로퍼티를 재정의할 수 없게 만드는 것을 말함  
+    (프로퍼티의 추가, 삭제, 수정을 할 수 없고 값의 읽기와 쓰기만 가능함)  
+    ```javascript
+      var person = {name : "Tom"};
+      Object.seal(person);
+      
+      person.age = 17;
+      console.log("age" in person); //false
+      
+      delete person.name;
+      console.log("name" in person); //true
+      
+      Object.defineProperty(person, "name", {enumerable: false}); //Stric 모드에서 에러 발생
+      
+      person.name = "Amy";
+      console.log(person); // {name : "Amy"}    
+    ```
+   
+  - 동결  
+    Object.freeze 메서드는 인수로 받은 객체를 동결함  
+    동결이란 객체에 프로퍼티를 추가하는 것을 금지하고 기존의 모든 프로퍼티를 재정의할 수 없게 만들며 데이터 프로퍼티를 쓸 수 없게 만드는 것  
+    (프로퍼티를 읽기만 가능함. 단, 객체에 접근자 프로퍼티가 정의되어 있다면 getter, setter 함수 모두 호출할 수 있음)  
+    ```javascript
+      var person = {_name : "Tom",
+                    get name(){return(this._name);},
+                    set name(value){this._name = value;}};
+      Object.freeze(person);
+      person.name = "Amy";
+      console.log(person.name); // Tom
+    ```
+   <!--20210209 기록 마침 객체를 잠그는 방법에 대해 알게 되었다.--> 
+    
+    
+    
         
         
       
