@@ -603,6 +603,95 @@
       console.log(person.name); // Tom
     ```
    <!--20210209 기록 마침 객체를 잠그는 방법에 대해 알게 되었다.--> 
+   
+   <!--20210210 기록 시작-->
+### 9.8 Mixin  
+  - Mixin 함수  
+    믹스인? 특정 객체에 다른 객체가 가지고 있는 프로퍼티를 붙여 넣어 뒤섞는 기법  
+           상속을 사용하지 않는 대신에 특정 객체의 프로퍼티를 동적으로 다른 객체에 추가함  
+           (믹스인을 구현하기 위해서는 객체의 프로퍼티를 복사하는 함수를 만들어야함)  
+     ```javascript
+      function mixin(target, source){
+        for(var property in source){
+          if(source.hasOwnProperty(property)){
+            target[property] = source[property];
+          }
+        }
+        return target;
+       }
+     
+     ```
+     mixin 함수는 source 객체가 소유하고 있으며 열거할 수 있는 프로퍼티를 target 객체에 복사함. 이미 target에 있는 프로퍼티 값은 덮어쓰고 target에 없는 프로퍼티 값은 추가함. 이때 덮어쓰거나 추가할 때 사용하는 방식은 얕은 복사임.  
+     
+     ※참고  
+       얕은 복사?  
+       객체의 복사본을 만드는 대신 그 객체의 참조만 복사하는 행위  
+       원본과 사본이 같은 객체를 참조하게 됨  
+       
+       깊은 복사?  
+       객체의 사본을 만들어 다른 메모리 영역에 복사하는 행위  
+   
+  - Mixin 함수 심화  
+    위의 mixin 함수는 원본 객체가 접근자 프로퍼티를 가지고 있을 때 접근자 프로퍼티도 데이터 프로퍼티로 바꾸어 복사하는 문제가 있다  
+    ```javascript
+      var person1 = {
+          _name : "Tom",
+          get name(){
+            return this._name;
+          }
+       };
+       var person2 = {};
+       mixin(person2, person1);
+       person2.name = "Amy";
+       console.log(person2); //{_name: "Tom", name: "Amy"}
+    ```
+    mixin 함수가 person1 객체의 프로퍼티를 person2 객체에 복사할 때 단순히 새로운 프로퍼티를 대상 객체에 추가한 다음 원본 객체의 프로퍼티가 복사하는 시점에 가지고 있던 값을 할당해 버린다. 객체의 접근자 프로퍼티를 다른 객체에 믹스인하려면 mixin 함수에서 프로퍼티를 생성할 때 Object.defineProperty 메서드를 사용해야 한다.
+    
+    ```javascript
+      function mixin(target, source){
+        var keys = Object.keys(source);
+        for(var i =0; i<keys.length; i++){
+          var descriptor = Object.getOwnPropertyDescriptor(source, keys[i]);
+          Object.defineProperty(target, keys[i], descriptor);
+        }
+       return target;
+      }
+      
+      var person1 = {
+         _name : "Tom",
+          get name(){
+            return this._name;
+          }
+       };
+       
+       var person2 = {};
+       mixin(person2, person1);
+       person2.name = "Amy";
+       console.log(person2); // {_name: "Tom"}
+    ```
+    위의 mixin 함수를 사용하면 접근자 프로퍼티를 올바르게 복사할 수 있다.
+    
+### 9.9 JSON  
+  - JSON(JavaScript Object Notation)  
+    JSON은 자바스크립트 객체를 문자열로 표현하는 데이터 포맷이다. JSON을 사용하면 객체를 직렬화 할 수 있다.  
+      직렬화? 컴퓨터의 메모리 속에 있는 객체를 똑같은 객체로 환원할 수 있는 문자열로 변환하는 과정  
+    
+  - 표기 방법  
+    JSON의 포맷은 자바스크립트의 리터럴 표기법에 기반을 두고 있다.  
+     - 객체 리터럴  
+        {name : "Tom", age : 20, marriage : false, date: [2,5,null]}
+     - JSON 데이터  
+        '{"name":"Tom", "age" : 20, "marriage" : false, "date" : [2,5,null]}'
+   
+   - JSON의 변환과 환원    
+     - 자바스크립트 객체를 JSON 문자열로 변환하기   
+       JSON.stringfy 메서드를 사용하여 객체를 JSON 문자열로 바꾸어 반환할 수 있다.  
+     - JSON 문자열을 자바스크립트 객체로 환원하기    
+       JSON.parse 메서드를 사용하여 문자열을 자바스크립트 객체로 환원하여 반환할 수 있다.  
+<!--20210210 기록 마침-->      
+    
+    
+     
     
     
     
