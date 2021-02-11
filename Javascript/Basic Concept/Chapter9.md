@@ -689,9 +689,74 @@
      - JSON 문자열을 자바스크립트 객체로 환원하기    
        JSON.parse 메서드를 사용하여 문자열을 자바스크립트 객체로 환원하여 반환할 수 있다.  
 <!--20210210 기록 마침-->      
-    
-    
+
+<!--20210211 기록 시작-->
+### 9.10 ECMAScript 6부터 추가된 객체의 기능    
+  주요 개선 사항으로는 프로퍼티 이름으로 심벌을 사용할 수 있게 된 것, 다양해진 객체 리터럴 표기법, Object 생성자 메서드의 추가, 클래스 구문 도입을 거론할 수 있다.  
+  
+  - 프로퍼티 이름으로 심벌 사용하기  
+    ECMAScript 5까지는 객체의 프로퍼티 이름으로 식별자나 문자열만 사용할 수 있었지만, ECMAScript 6부터는 심벌을 프로퍼티 이름으로 사용할 수 있게 되었다.  
+     ```javascript
+      var obj = {};
+      var s = Symbol("fruit");
+      obj[s] = 3;
+      console.log(obj); // {Symbol(fruit): 3}
+     ```
+     함수 안에서 심벌을 생성하여 그것을 속성 이름으로 사용하고 그 프로퍼티에 값을 할당하면 함수 바깥에서 프로퍼티 값을 읽거나 쓸 수 없다.   
+     (명시적으로 객체의 프로퍼티를 숨길 수 있다. for/in 반복문, Object.keys, Object.getOwnPropertyNames로 찾을 수 없다. 단, Object.getOwnPropertySymbols메서드로는 가져올 수 있다..)   
      
+  - 객체 리터럴에 추가된 기능  
+    - 계산된 프로퍼티 이름  
+      대괄호로 묶인 임의의 계산식이 평가된 값을 프로퍼티 이름으로 사용할 수 있게 되었다. 평가한 값이 Symbol 타입이라면 그대로 사용하고, 그렇지 않으면 문자열 타입으로 변환한다.  
+      ```javascript
+        var prop = "name", i=1;
+        var obj = {[prop+i]:"Tom"};
+        console.log(obj); //{name1: "Tom"}
+        
+        obj = {[Symbol("fruit")] :"apple"};
+        console.log(obj); //{Symbol(fruit): "apple"}
+      ```
+        
+    - 프로퍼티 정의의 약식 표기  
+      변수 prop가 선언되어 있을 때 {prop}를 {prop:prop}로 사용할 수 있게 되었다.  
+      ```javascript
+        var prop = 2;
+        var obj = {prop};
+        console.log(obj); //{prop: 2}
+      ```
+      
+    - 메서드 정의의 약식 표기  
+      프로퍼티 값으로 함수를 지정할 때 사용하는 약식 표기법이 추가되었다.  
+      ```javascript
+        var person = {
+          name : "Tom",
+          sayHello(){console.log("Hello",this.name);}
+        };
+        
+        person.sayHello(); //Hello Tom
+        
+        //위의 코드는 다음 코드와 거의 같다.  
+        var person = {
+          name : "Tom",
+          sayHello : function(){console.log("Hello",this.name);}          
+        };
+      ```
+      위의 두 코드는 거의 같지만 차이점이 존재한다.  
+        - { method(){} }는 생성자로 사용할 수 없다. prototype 프로퍼티를 가지지 않으므로 new 연산자로 인스턴스를 생성할 수 없다.  
+        - { method(){} }는 super 키워드를 사용할 수 없다.  
+        
+    -  제너레이터 정의의 약식 표기  
+       프로퍼티 값이 제너레이터 함수일 때 사용할 수 있는 약식 표기법이다.  
+       ```javascript
+         var obj = {
+            *range(n){for(var i =0; i<n; i++){yield i;}}            
+         };
+         
+         var it = obj.range(10);
+         console.log(it.next().value); //0
+         console.log(it.next().value); //1
+         console.log(it.next().value); //2
+       ```
     
     
     
