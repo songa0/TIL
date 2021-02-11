@@ -551,8 +551,150 @@
     console.log(Object.getOwnPropertyNames(person)); // ["name", "age", "sayHello"]
     
     ```
- <!--20210206 기록 마침 목요일에 10시까지 야근하고 와서 금요일 저녁에 너무 피곤해서 커밋을 못했다...-->   
-  
+ <!--20210206 기록 마침 목요일에 10시까지 야근하고 와서 금요일 저녁에 너무 피곤해서 커밋을 못했다...-->  
+ 
+ <!--20210209 기록 시작-->
+### 9.7 객체 잠그기  
+  - 확장 가능 속성   
+    객체의 확장 가능 속성은 객체에 새로운 프로퍼티를 추가할 수 있는지를 결정함  
+    확장 가능 속성 값이 true로 설정된 객체에는 새로운 프로퍼티를 추가할 수 있지만 false로 설정된 객체에는 추가할 수 없음  
+    (사용자가 정의한 객체와 내장 객체는 기본적으로 확장이 가능하지만 호스트 객체의 확장 가능 속성은 자바스크립트 실행 환경에 따라 설정된 값이 다름)  
+    
+  - 확장 방지  
+    Object.preventExtension 메서드는 인수로 받은 객체를 확장할 수 없게 만듦  
+    ```javascript
+      var person = {name : "Tom"};
+      Object.preventExtensions(person);
+      person.age = 17;
+      console.log("age" in person); //false
+      console.log(Object.isExtensible(person)); //false
+    ```
+    
+  - 밀봉   
+    Object.seal 메서드는 인수로 받은 객체를 밀봉함  
+    밀봉이란 객체에 프로퍼티를 추가하는 것을 금지하고 기존의 모든 프로퍼티를 재정의할 수 없게 만드는 것을 말함  
+    (프로퍼티의 추가, 삭제, 수정을 할 수 없고 값의 읽기와 쓰기만 가능함)  
+    ```javascript
+      var person = {name : "Tom"};
+      Object.seal(person);
+      
+      person.age = 17;
+      console.log("age" in person); //false
+      
+      delete person.name;
+      console.log("name" in person); //true
+      
+      Object.defineProperty(person, "name", {enumerable: false}); //Stric 모드에서 에러 발생
+      
+      person.name = "Amy";
+      console.log(person); // {name : "Amy"}    
+    ```
+   
+  - 동결  
+    Object.freeze 메서드는 인수로 받은 객체를 동결함  
+    동결이란 객체에 프로퍼티를 추가하는 것을 금지하고 기존의 모든 프로퍼티를 재정의할 수 없게 만들며 데이터 프로퍼티를 쓸 수 없게 만드는 것  
+    (프로퍼티를 읽기만 가능함. 단, 객체에 접근자 프로퍼티가 정의되어 있다면 getter, setter 함수 모두 호출할 수 있음)  
+    ```javascript
+      var person = {_name : "Tom",
+                    get name(){return(this._name);},
+                    set name(value){this._name = value;}};
+      Object.freeze(person);
+      person.name = "Amy";
+      console.log(person.name); // Tom
+    ```
+   <!--20210209 기록 마침 객체를 잠그는 방법에 대해 알게 되었다.--> 
+   
+   <!--20210210 기록 시작-->
+### 9.8 Mixin  
+  - Mixin 함수  
+    믹스인? 특정 객체에 다른 객체가 가지고 있는 프로퍼티를 붙여 넣어 뒤섞는 기법  
+           상속을 사용하지 않는 대신에 특정 객체의 프로퍼티를 동적으로 다른 객체에 추가함  
+           (믹스인을 구현하기 위해서는 객체의 프로퍼티를 복사하는 함수를 만들어야함)  
+     ```javascript
+      function mixin(target, source){
+        for(var property in source){
+          if(source.hasOwnProperty(property)){
+            target[property] = source[property];
+          }
+        }
+        return target;
+       }
+     
+     ```
+     mixin 함수는 source 객체가 소유하고 있으며 열거할 수 있는 프로퍼티를 target 객체에 복사함. 이미 target에 있는 프로퍼티 값은 덮어쓰고 target에 없는 프로퍼티 값은 추가함. 이때 덮어쓰거나 추가할 때 사용하는 방식은 얕은 복사임.  
+     
+     ※참고  
+       얕은 복사?  
+       객체의 복사본을 만드는 대신 그 객체의 참조만 복사하는 행위  
+       원본과 사본이 같은 객체를 참조하게 됨  
+       
+       깊은 복사?  
+       객체의 사본을 만들어 다른 메모리 영역에 복사하는 행위  
+   
+  - Mixin 함수 심화  
+    위의 mixin 함수는 원본 객체가 접근자 프로퍼티를 가지고 있을 때 접근자 프로퍼티도 데이터 프로퍼티로 바꾸어 복사하는 문제가 있다  
+    ```javascript
+      var person1 = {
+          _name : "Tom",
+          get name(){
+            return this._name;
+          }
+       };
+       var person2 = {};
+       mixin(person2, person1);
+       person2.name = "Amy";
+       console.log(person2); //{_name: "Tom", name: "Amy"}
+    ```
+    mixin 함수가 person1 객체의 프로퍼티를 person2 객체에 복사할 때 단순히 새로운 프로퍼티를 대상 객체에 추가한 다음 원본 객체의 프로퍼티가 복사하는 시점에 가지고 있던 값을 할당해 버린다. 객체의 접근자 프로퍼티를 다른 객체에 믹스인하려면 mixin 함수에서 프로퍼티를 생성할 때 Object.defineProperty 메서드를 사용해야 한다.
+    
+    ```javascript
+      function mixin(target, source){
+        var keys = Object.keys(source);
+        for(var i =0; i<keys.length; i++){
+          var descriptor = Object.getOwnPropertyDescriptor(source, keys[i]);
+          Object.defineProperty(target, keys[i], descriptor);
+        }
+       return target;
+      }
+      
+      var person1 = {
+         _name : "Tom",
+          get name(){
+            return this._name;
+          }
+       };
+       
+       var person2 = {};
+       mixin(person2, person1);
+       person2.name = "Amy";
+       console.log(person2); // {_name: "Tom"}
+    ```
+    위의 mixin 함수를 사용하면 접근자 프로퍼티를 올바르게 복사할 수 있다.
+    
+### 9.9 JSON  
+  - JSON(JavaScript Object Notation)  
+    JSON은 자바스크립트 객체를 문자열로 표현하는 데이터 포맷이다. JSON을 사용하면 객체를 직렬화 할 수 있다.  
+      직렬화? 컴퓨터의 메모리 속에 있는 객체를 똑같은 객체로 환원할 수 있는 문자열로 변환하는 과정  
+    
+  - 표기 방법  
+    JSON의 포맷은 자바스크립트의 리터럴 표기법에 기반을 두고 있다.  
+     - 객체 리터럴  
+        {name : "Tom", age : 20, marriage : false, date: [2,5,null]}
+     - JSON 데이터  
+        '{"name":"Tom", "age" : 20, "marriage" : false, "date" : [2,5,null]}'
+   
+   - JSON의 변환과 환원    
+     - 자바스크립트 객체를 JSON 문자열로 변환하기   
+       JSON.stringfy 메서드를 사용하여 객체를 JSON 문자열로 바꾸어 반환할 수 있다.  
+     - JSON 문자열을 자바스크립트 객체로 환원하기    
+       JSON.parse 메서드를 사용하여 문자열을 자바스크립트 객체로 환원하여 반환할 수 있다.  
+<!--20210210 기록 마침-->      
+    
+    
+     
+    
+    
+    
         
         
       
