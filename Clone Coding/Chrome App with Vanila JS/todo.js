@@ -12,32 +12,48 @@ function paintTodo(text){
     const span = document.createElement("span");
     span.innerText = text;
 
+    const newId = toDos.length+1;
+    li.id = newId;
+    
     li.appendChild(delBtn);
     li.appendChild(span);
 
     toDoList.appendChild(li);
+
+    delBtn.addEventListener("click",deleteTodo);
 }
 
-function saveInArr(text){
+function deleteTodo(event){
+    const btn = event.target;
+    const li = btn.parentNode;
+
+    toDoList.removeChild(li);
+}
+
+function saveTodos(text){
     const obj = {
         text: text,
         id : toDos.length+1
     };
     toDos.push(obj);
+    localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
 
 }
 function handleSubmit(event){
     event.preventDefault();
     const currentValue = toDoInput.value;
     paintTodo(currentValue);
-    saveInArr(currentValue);
+    saveTodos(currentValue);
     toDoInput.value = "";
 }
 
 function loadTodos(){
-    const toDos = localStorage.getItem(TODOS_LS);
-    if(toDos!==null){
-
+    const loadedToDos = JSON.parse(localStorage.getItem(TODOS_LS));
+    
+    if(loadedToDos!==null){
+        loadedToDos.forEach(function(toDo){
+            paintTodo(toDo.text);
+        });
     }
 }
 function init(){
