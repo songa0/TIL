@@ -164,4 +164,76 @@
       reduce 메서드는 배열의 첫 번째 요소부터 마지막 요소까지 합성 곱 처리를 함  
       합성 곱 처리? 배열 요소 하나를 함수로 처리한 후에 그 반환 값을 다음 번 요소를 처리할 때 함수의 입력 값으로 사용하는 처리 방법  
       
-      <!--20210213 기록 마침-->
+      <!--20210213 기록 마침--> <!--20210214 기록 시작-->
+      - reduce 메서드의 인수  
+        callback : 함성 곱을 하는 함수  
+        initial : callback이 처음호출되었을 떄의 첫번쨰 인수의 값 (생략 가능)  
+        
+        - callback 함수의 인수  
+          pre : 이전 요소를 처리한 함수의 반환값 또는 initial 또는 첫 번째 요소의 값  
+          value : 현재 처리하는 배열 요소의 값  
+          index : 현재 처리하는 배열 요소의 인덱스  
+          array : 메서드를 적용 중인 배열의 참조
+          
+        - initial 지정 여부에 따른 callback 인수의 값  
+          initial 지정함 : pre는 initial 의 값, value는 배열의 첫 번째 요소, index는 0  
+          initial 지정안함 : pre는 배열의 첫 번째 요소의 값, value는 배열의 두 번째 요소의 값, index는 1  
+      
+      ```javascript
+        var a = [1,2,3,4,5];
+        a.reduce(function(pre, value){return pre+ value;},0); //15
+        a.reduce(function(pre, value){return pre+ value;}); //15
+      ```
+       - initial을 지정한 경우  
+         |횟수|pre|value|index|반환값|
+         |:-:|:--:|:---:|:---:|:---:|
+         |1회차|0|1|0|1|
+         |2회차|1|2|1|3|
+         |3회차|3|3|2|6|
+         |4회차|6|4|3|10|
+         |5회차|10|5|4|15|
+         
+       - initial을 지정하지 않은 경우  
+         |횟수|pre|value|index|반환값|
+         |:-:|:--:|:---:|:---:|:---:|
+         |1회차|1|2|1|3|
+         |2회차|3|3|2|6|
+         |3회차|6|4|3|10|
+         |4회차|10|5|4|15|
+      
+      - reduce 함수를 이용한 배열의 모든 순열 구하기  
+        ```javascript
+          function permutation(a){
+            return a.reduce(function(list,element){
+              var newList = [];
+              list.forEach(function(seq){
+                 for(var i = seq.length; i>=0; i--){
+                  var newSeq = [].concat(seq);
+                  newSeq.splice(i,0,element);
+                  newList.push(newSeq);
+                 }
+              });
+              return newList;
+            },[[]]);     
+          }
+     
+          var a = [1,2,3];
+          permutation(a).forEach(function(value){console.log(value);});
+          //(3) [1, 2, 3]
+          //(3) [1, 3, 2]
+          //(3) [3, 1, 2]
+          //(3) [2, 1, 3]
+          //(3) [2, 3, 1]
+          //(3) [3, 2, 1] 
+        
+        ```
+        |횟수|list|element|반환값|
+        |:-:|:----|:----:|:-----|
+        |1회차|[[]]|1|[[1]]|
+        |2회차|[[1]]|2|[[1,2],[2,1]]|
+        |3회차|[[1,2],[2,1]]|3|[[1,2,3],[1,3,2],[3,1,2],[2,1,3],[2,3,1],[3,2,1]]|
+        
+        
+        
+        
+        
