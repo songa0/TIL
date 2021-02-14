@@ -1,6 +1,7 @@
 ## 문제
-![2 x n 타일링 문제](./images/2 x n 타일링.PNG)
-
+<img src = './images/210214_1.PNG' width = "650px"/>
+  
+  
 ## 내 풀이
 
 ```java
