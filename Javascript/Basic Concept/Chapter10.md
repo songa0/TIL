@@ -320,6 +320,78 @@
           
           var [a,b] = rotation(1,2, Math.PI/3);
         ```
+    <!--20210217 기록 시작-->
+    - 객체의 비구조화 할당  
+      - 기본적인 사용법
+        ```javascript
+          var{a:x, b:y} = {a:1, b:2};
+          //x = 1, y = 2 
+          
+          {a:x,b:y} = {a:1, c:1};
+          //x = 1, y = undefined
+          
+          {a:x,b:y} = {a:1, b:2, c:3};
+          //x = 1, y = 2
+          
+          var{sin:sin, cos:cos, tan:tan, PI:PI} = Math;
+          //var sin = Math.sin, cos = Math.cos, tan = Math.tan, PI = Math.PI
+        
+        ```
+        
+      - 프로퍼티의 기본값  
+        ```javascript
+          {a: x=1, b: y=2, c: z =3} = {a:2, b:4};
+          //x = 2, y = 4, z = 3
+        ```
+        
+      - 프로퍼티 이름 생략  
+        ```javascript
+           var{sin, cos, tan, PI} = Math;
+           //var sin = Math.sin, cos = Math.cos, tan = Math.tan, PI = Math.PI
+           
+           {a=1,b=2,c=3} = {a:2, b:4};
+           //a = 2, b = 4, c = 2
+        ```
     
-    
-    
+    - 반복 가능한 객체의 비구조화 할당  
+      우변에 반복 가능한 객체가 있을 때도 비구조화 할당을 할 수 있다.  
+      ```javascript
+        var [a,b,c] = "ABC";
+        function* createNumbers(from, to){
+          while(from<= to) yield from++;
+        }
+        var [a,b,c,d,e] = createNumbers(10, 15);
+      ```
+      
+    - 중첩된 자료의 비구조화 할당  
+      ```javascript
+        var [a, [b,c]] = [1,[2,3]];
+        var {a:x, b:{c:y, d:z}} = {a:1, b:{c:2, d:3}};
+             
+      ```
+      
+  -  전개 연산자  
+     ...은 전개 연산자라고 한다. 이 전개 연산자는 반복 가능한 객체를 반환하는 표현식 앞에 표기하여 반복 가능한 객체를 배열 리터럴 또는 함수의 인수 목록으로 펼칠 수 있다.  
+     ```javascript
+      [..."ABC"] // ["A","B","C"]
+      f(..."ABC") //f("A","B","C")
+      [1, ...[2,3,4],5] // [1,2,3,4,5]
+      f(...[1,2,3]) // f(1,2,3)
+     ```
+     
+     다음 예는 제너레이터가 만든 이터레이터를 배열 리터럴 안에 펼치는 예이다.  
+     
+     ```javascript
+      function* createNumbers(from, to){
+        while(from<to) yield from++;
+      }
+      var iter = createNumbers(10, 15);
+      [...iter] //[10, 11, 12, 13, 14]
+     ```
+     
+     전개 연산자를 활요하면 배열 두 개를 push 메서드로도 연결할 수 있다.  
+     ```javascript
+      var a = ["A", "B", "C"];
+      a.push(...["D", "E"]); //["A", "B", "C", "D", "E"]
+     ```
+    <!--20210217 기록 마침-->
