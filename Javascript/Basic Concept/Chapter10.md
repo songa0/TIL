@@ -395,4 +395,50 @@
       a.push(...["D", "E"]); //["A", "B", "C", "D", "E"]
      ```
      
-   <!--20210217 기록 마침-->
+   <!--20210217 기록 마침--> <!--20210218 기록 시작--> 
+  - ArrayBuffer와 형식화 배열  
+    ArrayBuffer, DataView, 형식화 배열(TypedArray)은 연속된 데이터 영역을 조작하기 위해 만들어진 객체이다. 본래는 웹 프라우저에서 WebGL을 사용하여 3차원 그래픽을 구현할 용도로 만들어진 객체로, 이들을 활용하면 배열과 이미지 데이터를 빠르게 읽고 쓸 수 있다.  
+    ArrayBuffer는 버퍼를 확보하고, DataView와 형식화 배열은 버퍼에 뷰를 제공한다. 버퍼는 뷰의 버퍼를 읽고 쓸 때 사용한다.
+    
+      - ArrayBuffer 생성자  
+        ArrayBuffer 생성자는 메모리에 고정 길이를 가진 인접한 영역을 확보한다. ArrayBuffer는 메모리에 영역을 확보하는 역할만 할 뿐 버퍼를 조작하는 메서드는 제공하지 않으며, 버퍼를 조작하려면 형식화 배열 또는 DataView 객체를 사용해야 한다.  
+        다음 예제로 생성 방법에 대해 알아보자.  
+         ```javascript
+          var buffer = new ArrayBuffer(1024); //버퍼 생성
+          console.log(buffer.byteLength); //1024         
+         ```
+         
+      - 형식화 배열  
+        자바스크립트의 배열은 Array 객체이다. Array 객체는 배열 요소의 추가와 삭제를 동적으로 할 수 있고 다양한 메서드를 이용할 수 있지만, 배열의 요소를 읽고 쓰는 속도가 느리다는 단점이 있다.  
+        형식화 배열은 ArrayBuffer가 확보한 버퍼를 데이터의 저장 장소로 이용하여 데이터의 빠른 읽기와 쓰기를 구현한 객체이다.  
+        특징에 대해 알아보자.  
+        - 형식화 배열 요소의 개수는 제한적이다.  
+        - 형식화 배열은 길이가 고정되어 있으며 요소를 추가하거나 삭제할 수 없다.  
+        - 형식화 배열에서는 Array.prototype의 메서드를 사용할 수 없다. (TypedArray.prototype 이 제공하는 메서드는 사용 가능하다)  
+        - 형식화 배열을 생성하면 모든 요소가 0으로 초기화 된다.  
+      
+      - 형식화 배열의 생성  
+        형식화 배열은 형식화 배열 요소가 차지하는 비트에 따라 아홉 종류로 구분할 수 있다. 자세한 내용은 아래 링크를 참고하자.  
+        https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/TypedArray#typedarray_%EA%B0%9D%EC%B2%B4  
+        
+      - 형식화 배열은 ArrayBuffer 객체의 뷰  
+        형식화 배열의 요소는 ArrayBuffer 객체의 영역 안에 저장된다. 형식화 배열의 요소를 읽고 쓰는 것은 형식화 배열이 저장된 ArrayBuffer 객체를 읽고 쓰는 것이다.  
+        ```javascript
+          var a = new Int8Array(10);
+          var buffer = a.buffer; //형식화 배열을 저장한 ArrayBuffer 객체의 참조는 buffer 프로퍼티로 가져올 수 있다.
+          console.log(buffer.byteLength); //10
+        ```
+        
+      - 오프셋을 지정해서 형식화 배열 생성하기  
+        형식화 배열을 ArrayBuffer 객체로 생성할 때 버퍼의 오프셋과 배열 길이를 지정할 수 있다.  
+        ```javascript
+          var buffer = new ArrayBuffer(16);
+          var a = new Int8Array(buffer, 2, 5);
+        ```
+        형식화 배열 a가 buffer의 2바이트 영역부터 요소 다섯 개 분량의 영역을 차지한다. 오프셋 배열 길이를 생략하면 배열이 버퍼의 모든 영역을 차지한다. 배열 길이를 생략하면 배열이 오프셋 지점부터 버퍼의 마지막 지점까지 차지한다.  
+      
+      - 형식화 배열의 메서드  
+        형식화 배열은 TypedArray.prototype의 프로퍼티를 상속받는다. 자세한 내용은 아래 링크를 참고하자.  
+        https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/TypedArray#%EB%A9%94%EC%84%9C%EB%93%9C_2  
+        <!--20210218 기록 마침--> 
+         
