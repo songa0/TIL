@@ -440,5 +440,50 @@
       - 형식화 배열의 메서드  
         형식화 배열은 TypedArray.prototype의 프로퍼티를 상속받는다. 자세한 내용은 아래 링크를 참고하자.  
         https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/TypedArray#%EB%A9%94%EC%84%9C%EB%93%9C_2  
-        <!--20210218 기록 마침--> 
+        <!--20210218 기록 마침--> <!--20210219 기록 시작-->
          
+    - Map  
+      - Map 객체는 데이터를 수집하여 활용하기 위한 객체로, 값의 고유한 식별 정보인 키와 값의 쌍을 저장한다.  
+        키와 값의 데이터 타입에는 제한이 없다.  
+      - Object 객체도 키와 값이 쌍을 이룬 프로퍼티가 모여서 만들어진 것으로 Map 객체와 비슷해 보이지만 다음과 같은 차이점이 있다.  
+        - Map 객체에는 데이터를 수집하기 위한 메서드가 있다.   
+        - Object 객체는 키로 문자열만 사용할 수 있지만 Map 객체는 키 타입에 제한이 없다.  
+        - Map 객체는 내부적으로 해시 테이블을 활용하기 때문에 검색 속도가 빠르다.  
+        - Map 객체는 이터러블하며 for/of 문으로 순회하면 키와 값으로 구성된 배열을 반환한다.  
+        - Map 객체는 데이터 개수를 size 프로퍼티로 구할 수 있다. (Object 객체는 프로퍼티 개수를 수동으로 계산해야 한다.)  
+      
+      - Map 객체의 생성  
+        ```javascript
+          // 빈 Map 객체 생성
+          var map = new Map();
+          
+          //초기 데이터를 지정해서 생성 
+          var zip = new Map([["Tom", "123-4567"],["Amy", "345-6789"]]);
+          
+        ```
+        
+      - Map 객체의 메서드  
+        Map 객체는 Map.prototype의 프로퍼티를 상속받는다. 자세한 내용은 아래 링크를 참고하자.  
+        https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Map#%EB%A9%94%EC%84%9C%EB%93%9C  
+      
+    - Set  
+      Set 객체는 중복되지 않는 유일한 데이터를 수집하여 활용하기 위한 객체로, 값의 데이터 타입에는 제한이 없다.  
+      
+      - Set 객체의 생성  
+        ```javascript
+          //빈 Set 객체 생성  
+          var set = new Set();
+          
+          //초기 데이터를 지정해서 생성 
+          var zip = new Set(["123-4567", "345-6789"]);
+        ```
+      
+      - Set 객체에서의 동일성 정의  
+        Set 객체에서의 값 동일성은 일치 연산자가 정의하는 동일성과 차이가 있다.  
+        Set 객체에서는 NaN과 NaN이 같으며 +0과 -0이 같다.  
+      
+      - Set 객체의 메서드  
+        Set 객체는 Set.prototype의 프로퍼티를 상속받는다. 자세한 내용은 아래 링크를 참고하자.  
+        https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Set#%EB%A9%94%EC%84%9C%EB%93%9C
+        
+        <!--20210219 기록 마침-->
