@@ -33,5 +33,50 @@
     예외란 오류 및 예외 조건이 발생한 사실을 알려주는 신호이다. 예외를 받아서 처리하는 부분을 가리켜 예외 처리기라고 하고, 예외를 받는 작업을 가리켜 예외를 잡는다라고 한다.  
     자바스크립트에서는 throw 문으로 예외를 던지고 try/catch/finally 문으로 예외를 잡아서 처리한다.  
     
- <!--20210220 기록 마침-->   
+ <!--20210220 기록 마침--> <!--20210221 기록 시작--> 
+  - throw문  
+    throw문은 예외를 던진다. 'throw 표현식;'과 같이 사용하며, 표현식으로는 어떤 타입의 값도 지정할 수 있다.  
+    사용자에게 표시할 오류 메시지가 포함된 문자열이나 오류 코드를 의미하는 숫자도 허용된다. 하지만 일반적으로 Error 객체나 Error 객체를 상속받은 객체를 지정한다.  
+    예외를 던지면 자바스크립트 인터프리터는 프로그램의 실행을 중단하고 바깥 블록에서 예외를 처리하는 예외처리기를 찾는다. (try/catch/finally 문의 catch문)  
+    예외 처리기가 없으면 프로그램을 종료한다.  
+    
+  - Error 객체  
+    자바스크립트에는 예외를 표현하기 위한 내장 객체가 일곱가지 있다. 그 중에 Error 객체는 범용적인 예외를 표현하기 위한 객체고, 나머지 여섯 개는 특정 예외가 발생했을 때 표현하기 위한 객체이다.  
+    |생성자|생성하는 인스턴스|
+    |:----|:---------------|
+    |Error|범용적인 예외 객체|
+    |EvalError|eval 함수와 관련해서 발생한 예외 객체|
+    |RangeError|숫자 값이 허용 범위를 벗어났을 때 발생하는 예외 객체|
+    |ReferenceError|잘못된 참조를 만났을 때 발생하는 예외 객체|
+    |SyntexError|자바스크립트 문법에 어긋나는 구문을 만났을 때 발생하는 예외 객체|
+    |TypeError|변수 및 인수 타입이 유효하지 않을 때 발생하는 예외 객체|
+    |URIError|encodeURI와 decodeURI 메서드에 잘못된 인수가 전달되었을 때 발생하는 예외 객체|
+    
+    자바스크립트 인터프리터는 요류가 발생했을 때 오류에 따라 예외 객체를 던진다. 아래 예를 보자.  
+    ```javascript
+      x++; //ReferenceError: x is not defined
+      if(a>0) {a++; //SyntaxError: Unexpected end of input
+      var obj = {};
+      obj.join(); //TypeError: obj.join is not a function
+      var pi = 3.141592;
+      pi.toFixed(1000); //RangeError: toFixed() digits argument must be between 0 and 100
+      decodeURIComponent("%");  //URIError: URI malformed    
+    ```
+    
+    예외를 표현하는 모든 내장 객체는 Error.prototype의 프로퍼티와 메서드를 상속 받는다.  
+    Error.prototype의 프로퍼티는 다음과 같다.  
+      - message : 오류 메시지를 뜻하는 문자열 
+      - name : 오류 이름을 뜻하는 문자열  
+    
+    Error.prototype의 메서드는 다음과 같다.  
+      - toString : 지정된 객체를 표현하는 문자열을 반환  
+    
+    아래 예와 같이 사용할 수 있다.  
+    ```javascript
+      var error = new TypeError("is not an array type");
+      console.log(error.message); //is not an array type
+      console.log(error.name); //TypeError
+      console.log(error.toString()); //TypeError: is not an array type
+    ```
+    
     
