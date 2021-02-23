@@ -333,7 +333,8 @@
     - 함수는 함수의 반환값으로 사용할 수 있음  
     - 함수는 프로퍼티와 메서드를 가질 수 있음  
     - 함수는 이름 없는 리터럴로 표현할 수 있음(익명 함수)   
-    - 함수는 동적으로 생성할 수 있음   
+    - 함수는 동적으로 생성할 수 있음 
+      
   위와 같은 작업이 가능한 객체를 일급 객체라 하며, 일급 객체인 함수는 일급 함수라고 함  
  
 - 함수의 프로퍼티  
@@ -349,7 +350,7 @@
   |프로퍼티 이름|설명|
   |:------------|:--|
   |apply()|선택한 this와 인수를 사용하여 함수 호출. 인수는 배열 객체|
-  |bind()|선택한 this와 인수를 적용한 새롱누 함수를 반환|
+  |bind()|선택한 this와 인수를 적용한 새로운 함수를 반환|
   |call()|선택한 this와 인수를 사용하여 함수 호출. 인수는 쉼표로 구분한 값|
   |constructor|Function 생성자의 참조|
   |toString()|함수의 소스 코드를 문자열로 만들어 반환|
@@ -417,8 +418,8 @@
         var digits = joinStrings(10, function(i){return i;});
         var randomChars = joinStrings(8, function(i){return String.fromCharCode(Math.floor(Math.random()*26)+"a".charCodeAt(0));});
         
-        console.log(digits);
-        console.log(randomChars);
+        console.log(digits); //0123456789
+        console.log(randomChars); //pdlhawvo
       ```
 - 메모이제이션  
   메모이제이션? 함수를 호출했을 때의 인수와 반환값을 한쌍으로 만들어 저장해두는 기법   
@@ -501,7 +502,7 @@
     var square = pow(2);
     var sqrt = pow(.5);
   ```
-  커링된 함수의 가장 큰 장점은 부분 적용한 함수를 쉽게 만들어 낼 수 있다는 점  
+  커링된 함수의 가장 큰 장점은 부분 적용한 함수를 쉽게 만들어 낼 수 있다는 점이다.  
   
 - 콜백 함수  
   다른 함수에 인수로 넘겨지는 함수  
