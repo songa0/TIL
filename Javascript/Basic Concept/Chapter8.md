@@ -717,15 +717,15 @@
       
       var iter = idMaker();
       console.log(iter.next()); // {value: 0, done: false}
-      console.log(iter.next()); // {value: 0, done: false}
+      console.log(iter.next()); // {value: 1, done: false}
       iter.throw(new Error());  // Error
-                                 // {value: 3, done: false}
+                                 // {value: 2, done: false}
     
     ```
     
     <!--20210121 기록 마침-->
   <!--20210122 기록 시작-->
-  - 반복 가능한 객체에 위임하기
+  - 반복 가능한 객체에 위임하기  
     제너레이터 함수 안에서는 yield 표현식 외에도 yield* 표현식을 사용 가능함  
     yield* 에는 반복 가능한 객체를 지정하여 반복 가능한 객체에서 순차적으로 값을 꺼내 각각의 값에 yield를 적용함  
     ```javascript
