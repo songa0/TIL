@@ -1,0 +1,94 @@
+body {
+    color : white;
+    background-color: #2d3436;
+    font-family : -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.form, .greeting{
+    display: none;
+}
+input{
+    border : 0;
+    border-bottom : 2px solid rgb(255, 255, 255);
+    background-color: rgba(0,0,0,0);
+    outline : 0;
+    font-size: 337%;
+    color : white;
+}
+
+.todo input{
+    font-size: 200%;
+
+}
+.clock{
+    font-weight :bold;
+    font-size: 900%;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+}
+.todo{
+    align-items: center;
+    flex-direction: column;
+}
+.empty{
+    height: 200px;
+
+}
+.greeting{
+    font-size: 337%;
+}
+.greet {
+    max-width: 100%;
+    padding: 0 40px;
+    position : relative;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.greet span {
+    color : white;
+    font-size: 337%;
+    margin-bottom: 5%;
+}
+
+.showing {
+    display: flex;
+}
+
+.hide {
+    display : none;
+}
+
+.toDoList{
+    color : white;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity : 0;
+    }to {
+        opacity: 1;
+    }
+
+}
+
+.bgImage{
+    position : absolute;
+    top : 0;
+    bottom:  0;
+    left : 0;
+    right : 0;
+    width: 100%;
+    height: 100%;
+    z-index:-1;
+    animation: fadeIn;
+}
+
+.weather{
+    height : 60px;
+}
+
+div{
+    display : flex;
+}
