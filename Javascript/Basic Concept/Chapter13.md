@@ -62,6 +62,15 @@
     Window 객체의 프로퍼티와 메서드는 window 프로퍼티로 참조할 수 있다. 예를 들어 Document 객체는 Window.document 와 같이 참조할 수 있다. 이 때 Window. 부분은 생략 가능하다.  
     
     - Window 객체의 주요 프로퍼티  
-      https://developer.mozilla.org/ko/docs/Web/API/Window#%EC%86%8D%EC%84%B1
-      
-      
+      https://developer.mozilla.org/ko/docs/Web/API/Window#%EC%86%8D%EC%84%B1    
+    
+  - Location 객체  
+    Location 객체는 창에 표시되는 문서의 URL을 관리한다. Location 객체는 window.location 또는 location으로 참조할 수 있다. document.location 또한 Location 객체를 참조한다.  
+      - Location 객체의 주요 프로퍼티와 메서드   
+        https://developer.mozilla.org/ko/docs/Web/API/Location  
+    
+  - History 객체  
+    History 객체는 창의 웹 페이지 열람 이력을 관리한다. History 객체는 window.history 또는 history로 참조할 수 있다.  
+      - History 객체의 주요 프로퍼티와 메서드  
+        https://developer.mozilla.org/ko/docs/Web/API/History  
+    <!--20210226 기록 마침 2시간 야근한날..-->
