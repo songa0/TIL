@@ -74,3 +74,15 @@
       - History 객체의 주요 프로퍼티와 메서드  
         https://developer.mozilla.org/ko/docs/Web/API/History  
     <!--20210226 기록 마침 2시간 야근한날..-->
+    
+  - Navigator 객체  
+    Navigator 객체는 스크립트가 실행 중인 웹 브라우저 등의 애플리케이션 정보를 관리한다. Navigator 객체는 window.navigator 또는 navigator로 참조할 수 있다.  
+    - Navigator 객체의 주요 프로퍼티와 메서드  
+        https://developer.mozilla.org/ko/docs/Web/API/Navigator  
+   
+  - Screen 객체  
+    Screen 객체는 화면(모니터) 크기와 색상 등의 정보를 관리한다. Screen 객체는 window.screen 또는 screen 참조할 수 있다.  
+    - Screen 객체의 주요 프로퍼티와 메서드  
+        https://developer.mozilla.org/ko/docs/Web/API/Screen  
+   
+   <!--20210227 기록 마침 휴가..-->
