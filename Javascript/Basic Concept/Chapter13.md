@@ -12,9 +12,77 @@
     
   - 웹 브라우저에서의 자바스크립트 실행 순서  
     렌더링 엔진 : 웹 브라우저에서 HTML 문서를 분석하고 표시하는 프로그램  
+    
     렌더링 엔진은 다음과 같은 처리 과정을 거쳐 HTML 문서의 구문을 분석하고, DOM 트리를 구축한 후에 HTML 안에 지정된 자바스크립트 코드를 실행한다.  
       1. 웹 브라우저로 웹 페이지를 열면 Window 객체가 생성된다. (Window 객체는 웹 페이지의 전역 객체로 웹 페이지와 탭마다 생성된다.)  
       2. Document 객체가 Window 객체의 프로퍼티로 생성되며, 웹 페이지를 해석해서 DOM 트리의 구축을 시도한다.  
-        Document 객체는 readyState 프로퍼티를 가지고 있으며, 이 프로퍼티에는 HTML 문서의 해석 상태를 뜻하는 문자열이 저장된다. (초깃값 : 'loading')  
+        Document 객체는 readyState 프로퍼티를 가지고 있으며, 이 프로퍼티에는 HTML 문서의 해석 상태를 뜻하는 문자열이 저장된다. (초깃값 : **'loading'**)  
       3. HTML 문서는 HTML 구문을 작성 순서에 따라 분석하며, Document 객체 요소와 텍스트 노드를 추가해 나간다.  
-      4. HTML 문서 안에 script 요소가 있으면 script 요소 안의 코드 또는 외부 파일에 저장된 코드의 구문을 분석한다. <!--20210223 기록 마침-->
+      4. HTML 문서 안에 script 요소가 있으면 script 요소 안의 코드 또는 외부 파일에 저장된 코드의 구문을 분석한다. <!--20210223 기록 마침--><!--20210224 기록 시작-->
+         그 결과 오류가 발생하지 않으면 그 시점에서 코드를 실행한다.  
+         (script 요소는 **동기적**으로 실행됨. script 요소의 구문을 분석해서 실행할 때는 HTML 문서의 구문 분석이 일시적으로 중단되고, 자바스크립트 코드 실행을 완료한 후에는 중단되었던 HTML 문서의 구문 분석을 재개한다.)    
+      5. HTML 문서의 모든 내용을 읽은 후에 DOM 트리 구축을 완료하면 document.readyState 프로퍼티 값이 **'interative'**로 바뀐다.  
+      6. 웹 브라우저는 Document 객체에 DOM 트리 구축 완료를 알리기 위해 DOMContentLoaded 이벤트를 발생시킨다.  
+         (img 등의 요소가 이미지 파일 등의 외부 리소스를 읽어 들여야 한다면 이 시점에서 읽어들임)  
+      7. 모든 리소스를 읽은 후엔 document.readyState 프로퍼티 값이 **'complete'**로 바뀐다.  
+         마지막으로 웹 브라우저는 Window 객체를 상대로 load 이벤트를 발생시킨다.  
+      8. 다양한 이벤트를 수신하며, 이벤트가 발생하면 이벤트 처리기가 **비동기**로 호출된다.
+    
+    \*참고   
+    이미지 등의 외부 리소스는 DOM 트리 구축 후에 로드한다.  
+    load 이벤트는 리소스를 읽어 들인 후에 발생하기 때문에 외부 리소스를 읽어 들이는 시간이 걸리는 만큼 사용자가 기다려야한다.  
+    이를 방지하기 위해서는 load 이벤트 대신 DOMContentLoaded 이벤트의 이벤트 처리기에 초기화 작업을 작성한 함수를 등록한다.  
+    이 방법을 사용하면 사용자가 오래 기다리지 않고도 웹 페이지를 조작할 수 있다.   <!--20210224 기록 마침--><!--20210225 기록 시작-->
+    
+    - async와 defer 속성  
+      async와 defer 속성은 script 요소의 논리 속성으로, script 요소에 적용하여 사용한다.  
+      이 속성을 사용하면 자바스크립트 코드를 실행할 때 HTML 구문 분석을 막지 않는다.  
+      
+      사용 예  
+      ```javascript
+        <script async src = "main.js"></script>
+        <script defer src = "main.js"></script>
+      ```
+      
+      script 요소에 async 속성을 설정하면 script 요소의 코드가 비동기적으로 실행된다. HTML 문서의 구문 분석 처리를 막지않고, script 요소의 코드를 최대한 빨리 실행한다. 여러 개의 script 요소에 async 속성을 설정하면 다 읽어 들인 코드부터 비동기적으로 실행하므로 실행 순서가 보장되지 안흔다.  
+      
+      defer 속성을 설정한 script 요소는 DOM 트리 구축이 끝난 후에 실행된다. DOM 구축이 끝난 시점에 실행되기 때문에 자바스크립트 코드로 요소 객체에 이벤트 처리기를 등록하는 등의 초기화 작업을 할 수 있다.  
+      
+      async 또는 defer 속성이 설정된 script 요소에 document.write 메서드가 있으면 async와 defer 속성이 무시되어 동기적으로 실행된다.  
+      
+  - 크로스 브라우징 대책  
+    크로스 브라우징 대책이란? ECMAScript 5를 지원하지 않는 오래된 웹 브라우저에서도 문제없이 웹 페이지를 표시하고 같은 기능을 사용할 수 있도록 대응하는 작업  
+    크로스 브라우징 대책  
+    - 기능성 테스트  
+    - 브라우저 테스트  
+    - 라이브러리를 사용해서 대응  
+
+  - Window 객체  
+    Window 객체는 전역 객체이며, 전역 변수는 Window 객체의 프로퍼티이다. 또한 웹 브라우저에서 사용할 수 있는 다양한 객체가 모두 Window 객체의 프로퍼티이다.  
+    Window 객체의 프로퍼티와 메서드는 window 프로퍼티로 참조할 수 있다. 예를 들어 Document 객체는 Window.document 와 같이 참조할 수 있다. 이 때 Window. 부분은 생략 가능하다.  
+    
+    - Window 객체의 주요 프로퍼티  
+      https://developer.mozilla.org/ko/docs/Web/API/Window#%EC%86%8D%EC%84%B1    
+    
+  - Location 객체  
+    Location 객체는 창에 표시되는 문서의 URL을 관리한다. Location 객체는 window.location 또는 location으로 참조할 수 있다. document.location 또한 Location 객체를 참조한다.  
+      - Location 객체의 주요 프로퍼티와 메서드   
+        https://developer.mozilla.org/ko/docs/Web/API/Location  
+    
+  - History 객체  
+    History 객체는 창의 웹 페이지 열람 이력을 관리한다. History 객체는 window.history 또는 history로 참조할 수 있다.  
+      - History 객체의 주요 프로퍼티와 메서드  
+        https://developer.mozilla.org/ko/docs/Web/API/History  
+    <!--20210226 기록 마침 2시간 야근한날..-->
+    
+  - Navigator 객체  
+    Navigator 객체는 스크립트가 실행 중인 웹 브라우저 등의 애플리케이션 정보를 관리한다. Navigator 객체는 window.navigator 또는 navigator로 참조할 수 있다.  
+    - Navigator 객체의 주요 프로퍼티와 메서드  
+        https://developer.mozilla.org/ko/docs/Web/API/Navigator  
+   
+  - Screen 객체  
+    Screen 객체는 화면(모니터) 크기와 색상 등의 정보를 관리한다. Screen 객체는 window.screen 또는 screen 참조할 수 있다.  
+    - Screen 객체의 주요 프로퍼티와 메서드  
+        https://developer.mozilla.org/ko/docs/Web/API/Screen  
+   
+   <!--20210227 기록 마침 휴가..-->
