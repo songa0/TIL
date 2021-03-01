@@ -1,0 +1,57 @@
+body{
+    background-color: #404142;
+    width : 550px;
+}
+
+header {
+    text-align: center;
+}
+nav {
+    padding: 12px;
+}
+nav ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style: none;
+    align-items: center;
+    padding-left: 0;
+}
+nav li img{
+    padding : 8px;
+}
+nav li div{
+    padding : 10px;
+    border-radius: 3px;
+}
+nav li .blueBtn{
+    background-color: #4989c9;   
+}
+
+nav li .yellowBtn{
+    background-color: #e6d263;
+}
+nav li .pinkBtn{
+    background-color: #e68ebb;
+}
+nav li img{
+    width: 60px;
+    
+}
+
+section ul{
+    list-style: none;
+    padding : 5px 20px;
+}
+section ul li{
+    background-color: white;
+    display : flex;
+    flex-direction: row;
+    align-items: center;
+    margin : 10px 0px;
+
+}
+section ul li img{
+    width : 45px;
+    padding : 3px 13px;
+}
