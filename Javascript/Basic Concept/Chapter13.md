@@ -64,25 +64,68 @@
     - Window 객체의 주요 프로퍼티  
       https://developer.mozilla.org/ko/docs/Web/API/Window#%EC%86%8D%EC%84%B1    
     
-  - Location 객체  
-    Location 객체는 창에 표시되는 문서의 URL을 관리한다. Location 객체는 window.location 또는 location으로 참조할 수 있다. document.location 또한 Location 객체를 참조한다.  
-      - Location 객체의 주요 프로퍼티와 메서드   
-        https://developer.mozilla.org/ko/docs/Web/API/Location  
+### 13.2 Location 객체  
+  Location 객체는 창에 표시되는 문서의 URL을 관리한다. Location 객체는 window.location 또는 location으로 참조할 수 있다. document.location 또한 Location 객체를 참조한다.  
+  - Location 객체의 주요 프로퍼티와 메서드   
+    https://developer.mozilla.org/ko/docs/Web/API/Location  
     
-  - History 객체  
-    History 객체는 창의 웹 페이지 열람 이력을 관리한다. History 객체는 window.history 또는 history로 참조할 수 있다.  
-      - History 객체의 주요 프로퍼티와 메서드  
-        https://developer.mozilla.org/ko/docs/Web/API/History  
+### 13.3 History 객체  
+  History 객체는 창의 웹 페이지 열람 이력을 관리한다. History 객체는 window.history 또는 history로 참조할 수 있다.  
+   - History 객체의 주요 프로퍼티와 메서드  
+     https://developer.mozilla.org/ko/docs/Web/API/History  
     <!--20210226 기록 마침 2시간 야근한날..-->
     
-  - Navigator 객체  
-    Navigator 객체는 스크립트가 실행 중인 웹 브라우저 등의 애플리케이션 정보를 관리한다. Navigator 객체는 window.navigator 또는 navigator로 참조할 수 있다.  
-    - Navigator 객체의 주요 프로퍼티와 메서드  
-        https://developer.mozilla.org/ko/docs/Web/API/Navigator  
+### 13.4 Navigator 객체  
+  Navigator 객체는 스크립트가 실행 중인 웹 브라우저 등의 애플리케이션 정보를 관리한다. Navigator 객체는 window.navigator 또는 navigator로 참조할 수 있다.  
+  - Navigator 객체의 주요 프로퍼티와 메서드  
+    https://developer.mozilla.org/ko/docs/Web/API/Navigator  
    
-  - Screen 객체  
-    Screen 객체는 화면(모니터) 크기와 색상 등의 정보를 관리한다. Screen 객체는 window.screen 또는 screen 참조할 수 있다.  
-    - Screen 객체의 주요 프로퍼티와 메서드  
-        https://developer.mozilla.org/ko/docs/Web/API/Screen  
+### 13.5 Screen 객체  
+  Screen 객체는 화면(모니터) 크기와 색상 등의 정보를 관리한다. Screen 객체는 window.screen 또는 screen 참조할 수 있다.  
+  - Screen 객체의 주요 프로퍼티와 메서드  
+    https://developer.mozilla.org/ko/docs/Web/API/Screen  
    
-   <!--20210227 기록 마침 휴가..-->
+   <!--20210227 기록 마침 휴가..--> <!--20210302 기록 시작-->  
+### 13.6 Document 객체  
+  Document 객체는 창에 표시되고 있는 웹 페이지를 관리한다. Document 객체는 window.document 또는 document로 참조할 수 있다.  
+  Document 객체는 중요한 객체로 뒤에서 자세하게 다룰 예정이다.  
+  - Document 객체의 주요 프로퍼티와 메서드  
+    https://developer.mozilla.org/ko/docs/Web/API/Document  
+  
+### 13.7 창 제어하기  
+  웹 브라우저는 일반적으로 여러 개의 창과 탭을 표시하며, 각각의 창과 탭은 별도의 브라우징 컨텍스트를 제공한다. 각각의 브라우징 컨텍스트는 별도의 Window 객체를 가진다.  
+  각 브라우징 컨텍스트는 상호 간에 독립적이며 다른 브라우징 컨텍스트 간에 간섭할 수 없다.  
+  하지만 예외는 있다. 브라우징 컨텍스트가 새로운 브라우징 컨텍스트를 열때이다. 이 경우에는 부모 브라우징 컨텍스트와 자식 브라우징 컨텍스트는 상호작용 가능하다.  
+
+  - 창 여닫기  
+    새로운 창 또는 탭을 열 때는 open 메서드를 사용한다. 사용 방법은 아래와 같다.  
+    ```javascript
+      var w = open(url, name, option);
+    ```
+    open 메서드는 새로운 창의 Window 객체를 반환한다.  
+    
+    각 인수의 의미는 다음과 같다.  
+    url : 새롭게 여는 창이 읽어 들이는 문서의 URL
+    name : 새로운 창의 이름  
+    option : 새로운 창의 설정 값(창의 크기 등)을 쉼표로 연결해서 표기한다.  
+             option으로 설정 가능 한 값에 대해서는 아래 url을 참고하자.   
+             https://developer.mozilla.org/ko/docs/Web/API/Window/open#window_features  
+    
+    열린 창을 닫을 때는 close 메서드를 사용한다. 사용 방법은 아래와 같다.  
+    ```javascript
+      w.close();
+    ```
+    
+  - 창 제어하기  
+    open 메서드로 연 창은 위치와 크기를 바꾸거나 스크롤할 수 있다. 사용할 수 있는 메서드 내용은 아래 url를 참고하자.  
+    https://developer.mozilla.org/ko/docs/Web/API/Window#%EB%A9%94%EC%84%9C%EB%93%9C  
+    
+  - 다른 창 참조하기  
+    부오 창과 자식 창(부모 창이 open 메서드로 연 창)은 서로의 Window 객체를 참조할 수 있다. 그러나 상호 간에 참조할 수 있는 경우는 동일 출처 정책을 만족할 때로 한정된다.  
+    부모 창이 자식 창의 Window 객체를 참조할 때는 open 메서드가 반환한 값을 사용하고, 자식 창이 부모 창의 Window 객체를 참조할 때는 자식 창의 Window 객체에 있는 opener 프로퍼티를 사용한다.  
+    
+    \*참고  
+    동일 출처 정책이란? 웹 페이지 위에서 동작하는 프로그램 출처와 그 프로그램이 읽으려고 시도하는 데이터 출처가 서로 다를 경우에 리소스 간의 상호작용을 제한하는 정책  
+                        출처란 리소스 URL이 지닌 세 가지 식별 정보를 말한다. 프로토콜, 포트번호, 호스트 이름이 같을 경우 출처가 같은 리소스라고 한다.  
+                        
+    <!--20210302 기록 마침-->
