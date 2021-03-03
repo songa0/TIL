@@ -34,7 +34,7 @@
 ### 6.3 이벤트 처리기와 타이머
   - 이벤트 처리기 : 이벤트가 발생했을 때 실행되는 함수  
     웹 브라우저에서 동작하는 프로그램은 기본적으로 **이벤트 주도형 프로그램**임  
-      - 이벤트 주도형 프로그램(event driven program)? 이벤트가 발생할 떄까지 기다렸다가 이벤트가 발생하면 미리 등록해 둔 작업을 수행하는 프로그램 
+      - 이벤트 주도형 프로그램(event driven program)? 이벤트가 발생할 때까지 기다렸다가 이벤트가 발생하면 미리 등록해 둔 작업을 수행하는 프로그램 
     
     함수를 이벤트 처리기로 등록하는 방법
       - HTML 요소의 속성으로 등록하는 방법
@@ -50,8 +50,8 @@
             <title></title>
             <script>
             function displayTime(){
-            var now = new Date();
-            console.log("현재 시각은 "+now.toLocaleString()+" 입니다.");   
+              var now = new Date();
+              console.log("현재 시각은 "+now.toLocaleString()+" 입니다.");   
             }
             </script>
         </head>
@@ -220,26 +220,26 @@
         Canvas의 그리기 명령은 호출하는 즉시 실행됨  
   - Canvas 기본 사용법
       ```html
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <meta charset = "UTF-8">
-                <title></title>
-                <script>
-                    window.onload = function(){
-                        var mycanvas = document.getElementById("mycanvas");
-                        var ctx = mycanvas.getContext("2d"); 
-                        //렌더링 컨텍스트 가져오기. Canvas로 그림을 그리려면 canvas 요소에서 렌더링 컨텍스트라는 객체를 가져와야함.
-                        //2차원 컴퓨터 그래픽스는 '2d', 3차원 컴퓨터 그래픽스는 'webgl'을 사용.
-                        ctx.strokeRect(10,60,200,100); //좌표가 (10,60)에 너비가 200이고 높이가 100인 사각형 테두리를 그린다
-                        //Canvas 좌표는 왼쪽 윗부분이 원점(0,0)
-                    };
-                </script>
-            </head>
-            <body>
-                <canvas id = "mycanvas" width="600" height="400"></canvas>
-            </body>
-        </html>
+      <!DOCTYPE html>
+      <html>
+          <head>
+              <meta charset = "UTF-8">
+              <title></title>
+              <script>
+                  window.onload = function(){
+                      var mycanvas = document.getElementById("mycanvas");
+                      var ctx = mycanvas.getContext("2d"); 
+                      //렌더링 컨텍스트 가져오기. Canvas로 그림을 그리려면 canvas 요소에서 렌더링 컨텍스트라는 객체를 가져와야함.
+                      //2차원 컴퓨터 그래픽스는 '2d', 3차원 컴퓨터 그래픽스는 'webgl'을 사용.
+                      ctx.strokeRect(10,60,200,100); //좌표가 (10,60)에 너비가 200이고 높이가 100인 사각형 테두리를 그린다
+                      //Canvas 좌표는 왼쪽 윗부분이 원점(0,0)
+                  };
+              </script>
+          </head>
+          <body>
+              <canvas id = "mycanvas" width="600" height="400"></canvas>
+          </body>
+      </html>
 
       ```
      <!--20201231 기록 마침
@@ -258,7 +258,7 @@
       |stroke()|패스를 그린다|
       |fill()|패스로 둘러싼 영역을 채운다|
       
-  - 그래픽스 속성
+  - 그래픽스 속성  
       선 색상, 채우기 색상, 투명도, 선 스타일 등을 설정할 수 있다. 사각형을 그리기 전이나 stroke와 fill 메서드로 패스를 그리기 전에 설정하면 그림에 반영된다.
       |속성 명|설명|
       |:------|:---|
