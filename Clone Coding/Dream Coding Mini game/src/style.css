@@ -6,9 +6,6 @@ body{
 header {
     text-align: center;
 }
-nav {
-    padding: 12px;
-}
 nav ul{
     display: flex;
     flex-direction: row;
@@ -38,10 +35,14 @@ nav li img{
     width: 60px;
     
 }
-
+nav ul li:hover{
+    transform:scale(1.1);
+    -webkit-transform:scale(1.1);
+}
 section ul{
     list-style: none;
     padding : 5px 20px;
+    margin : 0px;
 }
 section ul li{
     background-color: white;
@@ -54,4 +55,12 @@ section ul li{
 section ul li img{
     width : 45px;
     padding : 3px 13px;
+}
+
+.visible{
+    display : block;
+}
+
+.invisible{
+    display : none;
 }

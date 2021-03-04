@@ -22,7 +22,7 @@
             "image" :"../imgs/yellow_t.png"
         },
         {
-            "type" : "skrt",
+            "type" : "skirt",
             "gender" : "male",
             "size" : "large",
             "color" : "pink",
