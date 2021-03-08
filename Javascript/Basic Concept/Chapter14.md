@@ -112,3 +112,56 @@
     ```javascript
       document.querySelector("선택자");
     ```
+  
+  - Document 객체의 프로퍼티  
+    DOM을 표준화하기 이전의 DOM을 가리켜 DOM Level 0이라고 한다. DOM Level 0에는 위와 같은 노드를 가져오는 메서드가 없었다.  
+    그 대신 특정 요소 객체를 읽고 쓰는 수단이 Document 객체의 프로퍼티로 마련되어 있었다. 이 프로퍼티는 DOM의 최신 버전(DOM Level 3)에도 남아 있고 사용 가능하다.    
+    Document 객체의 요소를 읽고 쓰기 위해 마련된 프로퍼티는 아래 표를 참고하자. 
+    |프로퍼티|설명|
+    |:------|:---|
+    |document.documentElement|문서의 루트 요소 객체의 참조|
+    |document.head|문서의 head 요소 객체의 참조|
+    |document.body|문서의 body 요소 객체의 참조|
+    |document.forms[]|문서 안의 form 요소 객체의 참조를 저장한 유사 배열 객체|
+    |document.images[]|문서 안의 images 요소 객체의 참조를 저장한 유사 배열 객체|
+    |document.anchors[]|문서 안의 anchors 요소 객체의 참조를 저장한 유사 배열 객체|
+    |document.applets[]|문서 안의 applets 요소 객체의 참조를 저장한 유사 배열 객체|
+    |document.links[]|문서 안의 links 요소 객체의 참조를 저장한 유사 배열 객체|
+    |document.embeds[]|문서 안의 embeds 요소 객체의 참조를 저장한 유사 배열 객체|
+    |document.plugins[]|문서 안의 plugins 요소 객체의 참조를 저장한 유사 배열 객체|
+    |document.scripts[]|문서 안의 scripts 요소 객체의 참조를 저장한 유사 배열 객체|
+    
+    위의 표에서 document.forms[] 부터 그 밑에 나오는 프로퍼티들은 HTMLCollection 객체이다. HTMLCollection 객체는 유사 배열 객체이며 읽기 전용이다.  
+    
+### 14.3 속성 값의 읽기와 쓰기  
+  - 요소 객체의 프로퍼티로 요소의 속성을 읽고 쓰기  
+    요소 객체에는 요소의 일반적인 속성을 표현하기 위한 프로퍼티가 정의되어 있다. 요소 객체에는 일반적인 HTML 속성(id, class, name...)과 이벤트 처리기 프로퍼티(onclick, onmousedown,...) 등이 정의되어 있다. 일반적인 속성의 이름은 다음과 같이 표기한다.  
+    ```javascript
+      요소객체.속성이름
+    ```
+    이 프로퍼티는 읽기와 쓰기가 가능하다. 
+    ```html
+      <!DOCTYPE>
+      <html>
+        <head>
+        </head>
+        <body>
+          <a id="portalSite" href ="http://www.naver.com">포털 사이트</a>
+          <script>
+            var anchor = document.getElementById("portalSite");
+            console.log(anchor.href);
+            
+            anchor.href = "http://www.google.com";
+            console.log(anchor.href);
+          </script>
+        </body>
+      </html>
+
+    ```
+    위 예제와 같이 속성 프로퍼티는 쓰기가 가능하며 속성 값을 설정할 수 있다.  
+    HTML 요소의 속성 이름은 대소문자를 구분하지 않지만 자바스크립트 요소 객체의 속성 프로퍼티는 대소문자를 구분한다.  
+    또한 몇몇 HTML 속성 이름은 자바스크립트에서 예약어로 사용하고 있는 이름이다. 따라서 이런 경우에는 속성 이름 앞에 html을 덧붙인다.  
+    예를 들어 label 요소의 for 속성을 설정할 때 자바스크립트에서는 htmlFor를 사용하는 식이다. 단, class 속성은 자바스크립트에서는 className 프로퍼티를 사용한다.  
+    
+<!--20210309 기록 마침-->
+    
