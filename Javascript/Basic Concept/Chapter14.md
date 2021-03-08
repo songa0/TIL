@@ -89,4 +89,26 @@
     ```javascript
       document.getElementsByClassName(class의 이름);
     ```
-  <!--20210306 기록 마침-->
+  <!--20210306 기록 마침--> <!--20210308 기록 시작-->  
+  
+  - name 속성 값으로 노드 가져오기  
+    name 속성은 그 요소의 이름을 지정할 때 사용하며, form과 input 요소 등의 폼 컨트롤 요소, iframe, img, map, object 요소 등에 지정할 수 있다. name 속성 값은 class 속성 값과 마찬가지로 요소 여러 개를 대상으로 같은 값을 쓸 수 있다.  
+    getElementsByName 메서드를 사용하면 특정 문자열을 name 속성 값으로 갖는 요소 객체 목록을 가져올 수 있다.  
+    사용 방법은 아래와 같다.  
+    ```javascript
+      document.getElementsByName(name 속성 값);
+    ```
+    
+  - querySelectorAll, querySelector 메서드  
+    querySelectorAll 메서드를 사용하면 인수로 넘긴 선택자와 일치하는 요소 객체가 담긴 NodeList를 가져올 수 있다.  
+    사용 방법은 아래와 같다.  
+    ```javascript
+      document.querySelectorAll("선택자");
+    ```
+    메서드를 호출한 시점에 일치한 요소를 선택하여 NodeList로 반환한다.  
+    
+    querySelector 메서드는 지정한 선택자와 일치하는 요소 객체 중에서 문서 위치가 첫 번째인 요소 객체를 반환한다.  
+    사용 방법은 아래와 같다.  
+    ```javascript
+      document.querySelector("선택자");
+    ```
