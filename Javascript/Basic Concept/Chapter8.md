@@ -278,7 +278,7 @@
         }
         var counter = makeCounter();
       ```
-     1로 인해 f의 함수 객체를 전역변수 couter가 참조함  
+     1로 인해 f의 함수 객체를 전역변수 counter가 참조함  
      2로 인해 makeCounter의 렉시컬 환경 컴포넌트를 f의 함수 객체가 참조하고,  
      그 결과 makeCounter의 렉시컬 환경 컴포넌트를 전역 변수 counter가 간접적으로 참조하게 되어 가비지 컬렉션 대상이 되지 않음  
   
