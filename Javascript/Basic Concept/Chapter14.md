@@ -192,3 +192,24 @@
     요소 객체에는 attributes 프로퍼티가 정의되어 있고, 이 프로퍼티는 NamedNodeMap 객체로 그 요소에 설정된 모든 속성의 속성 노드 객체가 담겨 있다.  
     NamedNodeMap 객체의 요소인 속성 노드 객체의 name 프로퍼티에는 속성 이름이 담겨 있으며, value 프로퍼티에는 속성 값이 담겨 있다.  
     (NamedNodeMap 객체는 유사 배열이며 읽기 전용)
+    
+## 14.4 HTML 요소의 내용을 읽고 쓰기  
+  - innerHTML 프로퍼티  
+    innerHTML 프로퍼티는 요소 안의 HTML 코드를 가리킨다. innerHTML 프로퍼티를 사용해서 요소 안의 코드를 읽거나 쓸 수 있다.  
+    ```html
+      <!DOCTYPE html>
+      <html lang="ko">
+          <head>
+          </head>
+          <body>
+            <p id = "card">&hearts; 하트는 <strong>승려</strong>라는 뜻입니다.</p>
+            <script>
+              var para = document.getElementById("card");
+              para.innerHTML = "&diams; 다이아는 <strong>상인</strong>이라는 뜻입니다.";
+            </script>
+
+          </body>
+        </html>
+    ```
+    
+    
