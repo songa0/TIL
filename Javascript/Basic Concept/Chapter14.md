@@ -211,5 +211,71 @@
           </body>
         </html>
     ```
+<!--20210314 기록 시작-->  
+  - textContent와 innerText 프로퍼티  
+    textContent 프로퍼티는 요소의 내용을 웹 페이지에 표시했을 때의 텍스트 정보를 표시한다.  
+    textContent 프로퍼티 값은 지정한 요소의 자식 노드인 모든 텍스트 노드를 연결하 값이다.  
+    ```html
+      <!DOCTYPE html>
+      <html lang="ko">
+          <head>
+          </head>
+          <body>
+            <p id = "card">&hearts; 하트는 <strong>승려</strong>라는 뜻입니다.</p>
+            <script>
+              var para = document.getElementById("card");
+              console.log(para.textContent); <!--♥ 하트는 승려라는 뜻입니다.-->
+            </script>
+          </body>
+       </html>
+    ```
+    또한 textContent 프로퍼티에 텍스트를 대입하면 요소의 내용을 텍스트로 변환할 수 있다. 아래 예제를 통해 확인해보자.  
+     ```html
+      <!DOCTYPE html>
+      <html lang="ko">
+          <head>
+          </head>
+          <body>
+            <p id = "card">&hearts; 하트는 <strong>승려</strong>라는 뜻입니다.</p>
+            <script>
+              var para = document.getElementById("card");
+              para.textContent = "&diams; 다이아는 <strong>상인</strong>이라는 뜻입니다.";
+              console.log(para.innerHTML); <!--&amp;diams; 다이아는 &lt;strong&gt;상인&lt;/strong&gt;이라는 뜻입니다.-->
+              console.log(para.textContent); <!--&diams; 다이아는 <strong>상인</strong>이라는 뜻입니다.-->
+            </script>
+          </body>
+       </html>
+    ```
+    위의 예제에서 알 수 있듯이 textContent에 텍스트를 대입하면 요소의 내용을 바꿀 수 있따. 이 때 HTML 특수문자가 이스케이프되어 HTML로 표시할 수 있는 문자열로 바뀐다.  
+    (textContent 프로퍼티는 IE9 이전 버전에서는 사용할 수 없다. 대신 IE9 이전 버전에서는 innerText 프로퍼티를 사용한다)  
+   
+ ## 14.5 노드 생성/삽입/삭제하기  
+  - 노드 생성하기  
+    새로운 요소 노드 객체를 생성할 때는 createElement 메서드를 사용하고, 새로운 텍스트 노드를 생성할 때는 createTextNode 메서드를 사용한다.  
+    ```javascript
+      var element = document.createElement(요소의 이름);
+      var newText = document.createTextNode(텍스트);
+    ```
+    
+    아래의 예제를 보면 생성한 요소 객체의 parentNode, childNode가 비어있는 것을 확인할 수 있다. DOM 트리의 계층 구조를 뜻하는 프로퍼티 값이 비어있다.  
+    즉, 생성한 노드 객체는 메모리에 생성되어 있을 뿐 문서의 DOM 트리와는 아무런 관계가 없다는 것을 유의하자.  
+    ```javascript
+      var headline = document.createElement("h1");
+      
+      console.log(headline.parentNode); //null
+      console.log(headline.childNode); //undefined
+    ```
+   
+   노드 객체를 생성하는 주요 메서드  
+   |메서드|생성하는 노드 객체|
+   |:-----|:---------------|
+   |document.createElement(요소 이름)|요소 노드 객체|
+   |document.createAttribute(속성 이름)|속성 노드 객체|
+   |document.createTextNode(텍스트)|텍스트 노드 객체|
+   |document.createComment(텍스트)|주석 노드 객체|
+   |document.createDocumentFragment()|도큐먼트 프래그먼트|
+   |document.importNode(다른 문서의 노드, deep)|다른 문서에 있는 노드를 복사한다. deep을 true로 설정하면 자식 노드까지 복사하고 false로 설정하면 얕은 복사를한다.|
+   |node.cloneNode(deep)|노드를 복사한다. deep을 true로 설정하면 자식 노드까지 복사하고, false로 설정하면 얕은 복사를 한다.|
+   
     
     
