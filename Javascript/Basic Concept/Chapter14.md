@@ -276,6 +276,90 @@
    |document.createDocumentFragment()|도큐먼트 프래그먼트|
    |document.importNode(다른 문서의 노드, deep)|다른 문서에 있는 노드를 복사한다. deep을 true로 설정하면 자식 노드까지 복사하고 false로 설정하면 얕은 복사를한다.|
    |node.cloneNode(deep)|노드를 복사한다. deep을 true로 설정하면 자식 노드까지 복사하고, false로 설정하면 얕은 복사를 한다.|
-   
+ <!--20210315 기록 시작-->
+ 
+  - 노드 삽입하기  
+    노드 객체를 DOM 트리에 삽입하는 메서드는 Node 객체에 있는 appendChild와 InsertBefore 메서드이다.  
     
+    - appendChild  
+      요소 객체에 appendChild 메서드를 사용하면 인수로 넘긴 노드 객체를 해당 요소의 마지막 자식 노드로 삽입한다.  
+      ```javascript
+        요소 노드.appendChild(삽입할 노드)
+      ```
+      appendChild 메서드로 노드 객체를 삽입하면 그 객체가 DOM 트리에 추가되고 DOM 트리의 각 노드에 계층 구조를 정의하는 프로퍼티가 바뀐다.  
+      
+      ```html
+        <!DOCTYPE html>
+        <html lang="ko">
+          <head>
+          </head>
+          <body>
+            <ul id = "doglist">
+              <li>포메라니안</li>
+              <li>달마시안</li>
+            </ul>
+            <script>
+              var doglist = document.getElementById('doglist');
+              var element = document.createElement('li');
+              var text = document.createTextNode("불독");
+              doglist.appendChild(element); //이 코드와 아래 코드의 위치를 바꿔도 실행 결과에 영향을 미치지 않는다.
+              element.appendChild(text);
+            </script>
+          </body>
+        </html>        
+
+      ```
+      
+    - insertBefore  
+      지정한 자식 노드 바로 앞에 노드 객체를 삽입할 때는 insertBefore 메서드는 사용한다.  
+      ```javascript
+        요소 노드.insertBefore(삽입할 노드, 자식 노드)
+      ```
+     
+     아래 예제를 통해 insertBefore 메서드를 사용해 보자.  
+     ```html  
+      <!DOCTYPE html>
+      <html lang="ko">
+        <head>
+        </head>
+        <body>
+          <ul id = "doglist">
+            <li>포메라니안</li>
+            <li>달마시안</li>
+          </ul>
+          <script>
+            var doglist = document.getElementById('doglist');
+            var element = document.createElement('li');
+            var text = document.createTextNode("불독");
+            doglist.insertBefore(element, doglist.children[1]);
+            element.appendChild(text);
+          </script>
+        </body>
+      </html>
+
+     ```
+    
+    - 노드 옮기기  
+      이미 있는 노드를 appendChild와 insertBefore 메서드로 문서에 삽입하면 해당 노드를 현재 위치에서 삭제하고 새로운 위치에 삽입한다. 결과적으로 그 노드는 이동하게 된다.  
+      
+      ```html
+      <!DOCTYPE html>
+      <html lang="ko">
+        <head>
+        </head>
+        <body>
+          <ul id = "doglist">
+            <li>포메라니안</li>
+            <li>달마시안</li>
+          </ul>
+          <script>
+            var doglist = document.getElementById('doglist');
+            doglist.appendChild(doglist.children[0]);
+          </script>
+        </body>
+      </html> 
+      ```
+      
+    <!--20210315 기록 마침-->
+      
     
