@@ -361,5 +361,98 @@
       ```
       
     <!--20210315 기록 마침-->
+    <!--20210321 기록 시작-->
+    - HTML 요소를 생성하는 편리한 함수  
+      실제로 요소를 동적으로 생성하는 코드를 보면, 요소 이름, 속성 이름과 속성 값, 자식 노드 목록을 지정하는 코드가 대부분이다.  
+      다음 예제 함수는 위의 항목을 인수로 받아서 요소 객체를 생성한다.  
       
+      ```javascript
+        function elt(name, attributes){
+          var node = document.createElement(name);
+          if(attributes){
+            for(var attr in attributes){
+              if(attributes.hasOwnProperty(attr)){
+                node.setAttribute(attr, attributes[attr]);
+              }
+            }
+          }
+          
+          for(var i = 2; i<arguments.length; i++){
+            var child = arguments[i];
+            if(typeof child == "string"){
+              child = document.createTextNode(child);
+            }
+            node.appendChild(child);
+          }
+          
+          return node;
+        }  
+      
+      ```
+     위 함수를 사용하여 select 메뉴를 만들어보자.  
+     ```html
+       <!DOCTYPE html>
+        <html lang="ko">
+          <head>
+          </head>
+          <body>
+
+            <script>
+
+              function elt(name, attributes){
+                  var node = document.createElement(name);
+                  if(attributes){
+                    for(var attr in attributes){
+                      if(attributes.hasOwnProperty(attr)){
+                        node.setAttribute(attr, attributes[attr]);
+                      }
+                    }
+                  }
+
+                  for(var i = 2; i<arguments.length; i++){
+                    var child = arguments[i];
+                    if(typeof child == "string"){
+                      child = document.createTextNode(child);
+                    }
+                    node.appendChild(child);
+                  }
+
+                  return node;
+                }  
+              window.onload = function(){
+                var bloodTypes = ["A", "B", "AB", "O"];;
+                var form = elt("form", {id : "menu"});
+                var select = elt("select", {name :"bloodtype", id:"bloodtype"});
+
+                bloodTypes.forEach(element => {
+                  select.appendChild(elt("option",null,element));
+                });
+
+                form.appendChild(select);
+                document.body.appendChild(form);
+              };
+            </script>
+
+          </body>
+        </html>
+
+
+      ```
+      
+  - 노드 삭제하기  
+    removeChild 메서드는 노드의 자식 노드를 삭제한다.  
+    ```javascript
+      노드.removeChild(자식노드)
+    ```
+    이때 삭제할 수 있는 노드가 해당 노드의 자식이라는 점에 유의한다.  
+    특정한 노드인 node를 삭제하기 위해서는 'node.parentNode.removeChild(node);'와 같이 작성한다.  
     
+  - 노드 치환한기  
+    replaceChild 메서드는 인수로 받은 자식 노드를 제거하고 새로운 노드로 치환한다.  
+    ```javascript
+      노드.replaceChild(새로운 노드, 자식 노드)
+    ```
+    이때 치환하는 노드가 자식 노드라는 것에 유의한다.  
+    특정한 노드인 node를 새로운 노드인 newnode로 치환하고자 할 때는 'node.parentNode.replaceChild(newnode, node);'와 같이 작성한다.  
+        
+      
