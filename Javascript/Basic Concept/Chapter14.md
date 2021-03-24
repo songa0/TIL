@@ -487,6 +487,25 @@
       뷰 포트의 높이  
        document.documentElement.clientHeight (스크롤 막대의 높이를 포함하지 않음)   
        window.innerHeight (스크롤 막대의 높이를 포함. IE9 이후에 출시된 브라우저에서 사용 가능)   
-     
-   
+     <!--20210324 기록 시작-->  
+    - 스크롤한 거리 구하기   
+      문서의 뷰 포트를 스크롤한 거리를 제공하는 프로퍼티는 여러 가지가 있지만, 웹 브라우저에 따라 제공하는 프로퍼티가 다르다.  
+      - 인터넷 익스플로러, 파이어폭스  
+        document.documentElement.scrollLeft : X축 방향으로 스크롤한 거리  
+        document.documentElement.scrollTop : Y축 방향으로 스크롤한 거리  
+        
+      - 크롬, 사파리, 오페라, 엣지, 각 웹 브라우저의 Quirks Mode  
+        document.body.scrollLeft : X축 방향으로 스크롤한 거리  
+        document.body.scrollTop : Y축 방향으로 스크롤한 거리 
+        
+      - 파이어폭스, 크롬, 사파리, 오페라, 엣지, IE9이상  
+        window.pageXOffset : X축 방향으로 스크롤한 거리  
+        window.pageYOffset : Y축 방향으로 스크롤한 거리  
+      
+    - 스크롤하기  
+      - 특정 위치로 스크롤 하기  
+        Window 객체의 scrollTo 메서드는 문서 좌표(X,Y)를 인수로 받으며, 뷰 포트 좌표의 원점까지 스크롤한다.  
+        ```javascript
+          window.scrollTo(X,Y);
+        ```
         
