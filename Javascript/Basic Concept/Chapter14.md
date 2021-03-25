@@ -508,4 +508,15 @@
         ```javascript
           window.scrollTo(X,Y);
         ```
-        
+     <!--20210325 기록 시작-->   
+    - 특정 거리만큼 스크롤하기  
+      Window 객체의 scrollBy 메서드는 스크롤할 거리를 인수로 받아 문서를 그 거리만큼 스크롤한다.  
+      ```javascript
+        window.scrollBy(dx,dy);
+      ```
+      
+    - 특정 요소가 있는 위치까지 스크롤하기  
+      요소 객체의 scrollIntoView 메서드는 그 요소가 웹 브라우저의 표시 영역에 들어올 때까지 스크롤한다.  
+      ```javascript
+        요소 객체.scrollIntoView(alignWithTop);
+      ```
