@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>좌표실습</title>
+    <style>
+        div{
+            width : 100px;
+            height : 100px;
+            background-color: bisque;
+            margin-bottom: 4px;
+            border-radius: 4px;
+        }
+        #specialDiv{
+            background-color:coral;
+        }
+        aside{
+            position: fixed;
+            top : 10px;
+            right: 20px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div id="specialDiv"></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <aside>
+        <button id= "scrByBtn">Scroll by 100px</button>
+        <button id= "scrToBtn">Scroll to 100px</button>
+        <button id= "scrToSpcBtn">Scroll into Special</button>
+    </aside>
+</body>
+<script>
+    const specialDiv = document.querySelector('#specialDiv'),
+          scrByBtn = document.querySelector('#scrByBtn'),
+          scrToBtn = document.querySelector('#scrToBtn'),
+          scrToSpcBtn = document.querySelector('#scrToSpcBtn');
+
+
+    specialDiv.addEventListener('click',event=>{
+        console.log(specialDiv.getBoundingClientRect());
+        console.log(`client : ${event.clientX}, ${event.clientY}`);
+        console.log(`page : ${event.pageX}, ${event.pageY}`);
+    });
+
+    scrByBtn.addEventListener('click',()=>{  
+        window.scrollBy(0,100);
+    });
+
+    scrToBtn.addEventListener('click',()=>{  
+        window.scrollTo(0,100);
+    });
+
+    scrToSpcBtn.addEventListener('click',()=>{  
+        specialDiv.scrollIntoView();
+    });
+
+</script>
+</html>
