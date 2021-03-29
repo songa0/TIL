@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+            text-align: center;
+        }
+        img{
+            display: block;
+            margin : auto;
+        }
+        #findBtn{
+            position : fixed;
+            top : 2px;
+            left : 50%;
+            transform : translate(-50%, 0);
+            background-color : tomato;
+            font-size : 20px;
+            color : white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt=""> 
+    <img src="rabbit.png" alt=""> 
+    <img id = "specialImg" src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <img src="carrot.png" alt="">
+    <button id = "findBtn">Find a rabbit 🐇</button>
+</body>
+<script>
+    const findBtn = document.querySelector('#findBtn'),
+          specialImg = document.querySelector('#specialImg');
+    findBtn.addEventListener('click',event=>{
+        specialImg.scrollIntoView({behavior:"smooth", block:"center"});
+    });
+</script>
+</html>
