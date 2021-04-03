@@ -1,0 +1,25 @@
+body {
+  width: 400px;
+  height: 580px;
+}
+
+header {
+  background-color: blueviolet;
+  color: white;
+  height: 50px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-align: center;
+}
+section {
+  width: 400px;
+  height: 400px;
+}
+
+footer {
+  background-color: blueviolet;
+  text-align: center;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  height: 50px;
+}
