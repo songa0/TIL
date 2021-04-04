@@ -14,6 +14,7 @@ header {
 section {
   width: 400px;
   height: 400px;
+  background-color: #e8e6e6;
 }
 
 footer {
@@ -22,4 +23,29 @@ footer {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   height: 50px;
+}
+
+#itemList {
+  height: 365px;
+  margin: 0px;
+  list-style-type: none;
+  padding: 5px 30px;
+}
+
+#inputItem {
+  width: 100%;
+  border: none;
+  padding: 0px;
+  height: 25px;
+  outline: none;
+}
+
+.liItem span {
+  float: right;
+}
+
+footer #addBtn {
+  margin: 0px;
+  border: none;
+  padding: 0px;
 }
