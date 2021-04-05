@@ -2,27 +2,47 @@ const itemList = document.querySelector("#itemList");
 const inputItem = document.querySelector("#inputItem");
 const addBtn = document.querySelector("#addBtn");
 
-const addItemList = function(){
-    let li = document.createElement("li");
-        li.classList.add("liItem");
-    let textNode = document.createTextNode(inputItem.value);
-    let delBtn = document.createElement("span");
-       
-    let delTextNode = document.createTextNode("🗑");
+function onAdd(){
+    if(inputItem.value==''){
+        inputItem.focus();
+        return;
+    }
 
-    li.append(textNode);
-    itemList.append(li);
-    
-    delBtn.append(delTextNode);
-    li.append(delBtn);
+    const item = createItem();
+
+    itemList.append(item);
+
+    item.scrollIntoView({block:'center'});
 
     inputItem.value = "";
+    inputItem.focus();
+}
+function createItem(){
+    const li = document.createElement('li');
+    li.classList.add("liItem");
+
+    const liDivider = document.createElement('div');
+    liDivider.setAttribute('class','liItem__devider');
+
+    let textNode = document.createTextNode(inputItem.value);
+    
+    let delBtn = document.createElement("span");
+    delBtn.innerHTML= '<i class="fas fa-trash-alt"></i>';
+
+    li.append(textNode);
+    li.append(delBtn);
+    li.append(liDivider);
+   
+    delBtn.addEventListener("click",()=>{
+        itemList.removeChild(li);
+    });
+
+   return li;
 }
 
-addBtn.addEventListener("click",addItemList);
+addBtn.addEventListener("click",onAdd);
 
 inputItem.addEventListener("keyup", e=>{
-    if(e.keyCode == 13) addItemList();
+    if(e.keyCode == 13) onAdd();
 });
-
 

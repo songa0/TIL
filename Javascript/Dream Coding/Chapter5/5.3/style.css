@@ -1,12 +1,21 @@
 body {
   width: 400px;
   height: 580px;
+  text-align: center;
 }
 
 header {
-  background-color: blueviolet;
+  background: rgba(237, 193, 211);
+  background: linear-gradient(
+    166deg,
+    rgba(237, 193, 211, 1) 0%,
+    rgba(219, 192, 216, 1) 35%,
+    rgba(127, 188, 242, 1) 100%
+  );
   color: white;
   height: 50px;
+  font-size: 24px;
+  padding: 8px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   text-align: center;
@@ -14,15 +23,20 @@ header {
 section {
   width: 400px;
   height: 400px;
-  background-color: #e8e6e6;
+  background-color: #f1f1f1;
 }
 
 footer {
-  background-color: blueviolet;
+  background: rgba(237, 193, 211);
+  background: linear-gradient(
+    166deg,
+    rgba(237, 193, 211, 1) 0%,
+    rgba(219, 192, 216, 1) 35%,
+    rgba(127, 188, 242, 1) 100%
+  );
   text-align: center;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-  height: 50px;
 }
 
 #itemList {
@@ -30,27 +44,49 @@ footer {
   margin: 0px;
   list-style-type: none;
   padding: 5px 30px;
+  overflow-y: auto;
+}
+
+#itemList span {
+  cursor: pointer;
+}
+
+#itemList span:hover {
+  color: red;
+  transition: all 300ms ease-in;
+  transform: scale(1.1);
 }
 
 #inputItem {
   width: 100%;
   border: none;
-  padding: 0px;
+  padding: 0px 10px;
   height: 25px;
   outline: none;
+  font-size: 16px;
 }
 
-.liItem span {
-  float: right;
+.liItem {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  height: 30px;
+  padding: 3px;
+}
+
+.liItem__devider {
+  height: 1px;
+  background-color: lightgray;
+  width: 100%;
 }
 
 footer #addBtn {
-  margin: 0px;
-  border-radius: 10px;
   padding: 3px;
-  border: 1px;
-  background-color: black;
+  font-size: 45px;
   position: relative;
-  top: 50%;
-  transform: translate(0, -50%);
+}
+
+footer #addBtn:hover {
+  transition: all 300ms ease-in;
+  transform: scale(1.1);
 }
