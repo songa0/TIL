@@ -544,13 +544,12 @@
 
    - 폼 요소와 폼 컨트롤러 요소 가져오기  
      폼 요소 객체를 가져오는 방법에는 getElementById 등의 DOM 메서드를 사용하는 방법과 Document 객체의 forms 프로퍼티를 사용하는 방법이 있다.  
-
-    - DOM 메서드로 가져오는 방법  
+      - DOM 메서드로 가져오는 방법  
        ```javascript
           var menu = document.getElementById("menu1");
           var nputs = document.querySelectorAll("#form1 input[type='radio']");
        ```
-    - forms 프로퍼티로 form 요소 가져오기  
+      - forms 프로퍼티로 form 요소 가져오기  
       ```javascript
         document.forms[0] // 인덱스로 가져오기
         document.forms.form1 //id 속성값으로 가져오기
