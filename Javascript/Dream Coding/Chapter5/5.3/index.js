@@ -1,6 +1,7 @@
 const itemList = document.querySelector("#itemList");
 const inputItem = document.querySelector("#inputItem");
 const addBtn = document.querySelector("#addBtn");
+let id = 0;
 
 function onAdd(){
     if(inputItem.value==''){
@@ -11,7 +12,12 @@ function onAdd(){
     const item = createItem();
 
     itemList.append(item);
-
+    itemList.addEventListener("click", e=>{
+        const id = e.target.dataset.id;
+        if(e.target.nodeName==="I" && id){
+            itemList.querySelector(`li[data-id='${id}']`).remove();
+        }
+    });
     item.scrollIntoView({block:'center'});
 
     inputItem.value = "";
@@ -19,23 +25,13 @@ function onAdd(){
 }
 function createItem(){
     const li = document.createElement('li');
+    li.setAttribute('data-id', id);
     li.classList.add("liItem");
-
-    const liDivider = document.createElement('div');
-    liDivider.setAttribute('class','liItem__devider');
-
-    let textNode = document.createTextNode(inputItem.value);
-    
-    let delBtn = document.createElement("span");
-    delBtn.innerHTML= '<i class="fas fa-trash-alt"></i>';
-
-    li.append(textNode);
-    li.append(delBtn);
-    li.append(liDivider);
-   
-    delBtn.addEventListener("click",()=>{
-        itemList.removeChild(li);
-    });
+    li.innerHTML = `
+            ${inputItem.value}
+            <span><i class='fas fa-trash-alt' data-id = ${id}></i></span>
+            <div class='liItem__devider'></div>` ;
+    id++;
 
    return li;
 }
