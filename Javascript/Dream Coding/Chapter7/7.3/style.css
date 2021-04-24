@@ -43,3 +43,7 @@ header #carrotCnt {
   color: white;
   border: 3px solid black;
 }
+
+section img {
+  position: relative;
+}
