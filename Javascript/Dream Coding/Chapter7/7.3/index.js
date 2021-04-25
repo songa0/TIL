@@ -3,9 +3,11 @@ const randomNum  = Math.floor(Math.random() * 10+1);
 const carrotCnt = document.querySelector('#carrotCnt');
 const startStopBtn = document.querySelector('#startStopBtn');
 const section = document.querySelector('section');
+const header = document.querySelector('header');
 let startStopBtnFlag = true; //start
 let timerSec = randomNum;
 let leftCarrotNum = randomNum;
+let bugNum = randomNum;
 let intervalFunc;
 
 timer.innerHTML = `0:${timerSec}`;
@@ -51,14 +53,26 @@ startStopBtn.addEventListener('click',function(){
 function setCarrot(carrotNum){
     for(var i = 0; i<carrotNum; i++){
         var img = document.createElement('img');
+        img.id = 'carrot'+i;
+        img.classList.add('carrot');
         img.src = 'img/carrot.png';
-        img.left = '50px';
-        img.top = '50px';
+        img.style.left = Math.random() * (section.clientWidth-img.width)+'px';
+        img.style.top = ((Math.random() * (section.clientHeight-img.height))+header.clientHeight)+'px';
         section.appendChild(img);
 
     }
 };
 
-function setBug(carrotNum){
+function setBug(bugNum){
+    for(var i = 0; i<bugNum; i++){
+        var img = document.createElement('img');
+        img.src = 'img/bug.png';
+        img.id = 'bug'+i;
+        img.classList.add('bug');
+        img.style.left = Math.random() * (section.clientWidth-img.width)+'px';
+        img.style.top = ((Math.random() * (section.clientHeight-img.height))+header.clientHeight)+'px';
+        section.appendChild(img);
+
+    }
 
 };
