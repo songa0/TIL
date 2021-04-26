@@ -76,3 +76,16 @@ function setBug(bugNum){
     }
 
 };
+
+section.addEventListener('click',itemClick);
+
+function itemClick(event){
+    console.dir(event.target.outerHTML);
+   if(event.target.classList.contains("bug")){
+
+   }else{ //carrot
+        event.target.outerHTML = '';    
+        leftCarrotNum--;
+        carrotCnt.innerHTML = leftCarrotNum;
+   }
+};
