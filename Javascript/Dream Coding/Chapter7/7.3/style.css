@@ -49,3 +49,26 @@ section {
 section img {
   position: absolute;
 }
+#redoDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  transform: translate(-50%, 0);
+  left: 50%;
+  top: 40%;
+  background-color: rgba(90, 90, 90, 0.3);
+  padding: 40px 100px;
+  border-radius: 12px;
+  font-size: 30px;
+  font-weight: bold;
+  color: lavender;
+}
+
+#redoDiv i {
+  background-color: khaki;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid black;
+  color: black;
+}

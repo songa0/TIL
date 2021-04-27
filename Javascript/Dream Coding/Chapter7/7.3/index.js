@@ -39,13 +39,14 @@ startStopBtn.addEventListener('click',function(){
     if(startStopBtnFlag){
         startStopBtn.innerHTML = '<i class="fas fa-stop"></i>';
         startStopBtnFlag = false;
+        section.innerHTML = '';
         setCarrot(leftCarrotNum);
         setBug(leftCarrotNum);
         startClock();
     }else{
         startStopBtn.innerHTML = '<i class="fas fa-play"></i>';
         startStopBtnFlag = true;
-        stopClock();
+        stopGame();
         
     }
 });
@@ -80,12 +81,19 @@ function setBug(bugNum){
 section.addEventListener('click',itemClick);
 
 function itemClick(event){
-    console.dir(event.target.outerHTML);
    if(event.target.classList.contains("bug")){
-
+     stopGame();
    }else{ //carrot
         event.target.outerHTML = '';    
         leftCarrotNum--;
         carrotCnt.innerHTML = leftCarrotNum;
    }
+};
+
+function stopGame(){
+    var redoDiv = document.createElement('div');
+    redoDiv.id = 'redoDiv';
+    redoDiv.innerHTML = '<i class="fas fa-redo-alt"></i><span>YOU LOST</span>'
+    section.appendChild(redoDiv);
+    stopClock();
 };
