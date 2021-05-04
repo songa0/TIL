@@ -1,8 +1,10 @@
 const timer = document.querySelector('#timer');
 const carrotCnt = document.querySelector('#carrotCnt');
 const startStopBtn = document.querySelector('#startStopBtn');
-const section = document.querySelector('section');
+const section = document.querySelector('#game__field');
 const header = document.querySelector('header');
+const loseDiv = document.querySelector('#loseDiv');
+const winDiv = document.querySelector('#winDiv');
 let startStopBtnFlag = true; //start
 let timerSec = 0;
 let leftCarrotNum = 0;
@@ -57,7 +59,7 @@ function gameStart(){ //게임 시작
 startStopBtn.addEventListener('click',function(){
     setStartStopBtn(startStopBtnFlag);
     startStopBtnFlag?gameStart():gameOver();
-    startStopBtnFlag = startStopBtnFlag?false:true;
+    startStopBtnFlag = !startStopBtnFlag;
 });
 
 function setStartStopBtn(flag){
@@ -108,28 +110,23 @@ function itemClick(event){
 };
 
 function showGameOverDiv(){
-    var redoDiv = document.createElement('div');
-    redoDiv.id = 'redoDiv';
-    redoDiv.innerHTML = '<i class="fas fa-redo-alt" id="redoBtn"></i><span>YOU LOST</span>'
-    section.appendChild(redoDiv);
-    redoDiv.addEventListener('click',()=>{
-        section.removeChild(redoDiv);
-        gameStart();
-    });
-    
+    loseDiv.classList.remove('popup__hide');   
 };
+loseDiv.addEventListener('click',()=>{
+    loseDiv.classList.add('popup__hide');
+    gameStart();
+});
 
 function showGameFinished(){
-    var redoDiv = document.createElement('div');
-    redoDiv.id = 'redoDiv';
-    redoDiv.innerHTML = '<i class="fas fa-redo-alt" id="redoBtn"></i><span>YOU WIN</span>'
-    section.appendChild(redoDiv);
-    redoDiv.addEventListener('click',()=>{
-        section.removeChild(redoDiv);
-        gameStart();
-    });
-    
+    winDiv.classList.remove('popup__hide');
 };
+
+winDiv.addEventListener('click', ()=>{
+    winDiv.classList.add('popup__hide');
+    gameStart();
+});
+
+
 
 
 

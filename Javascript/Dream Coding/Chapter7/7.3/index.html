@@ -10,13 +10,25 @@
     <title>Document</title>
 </head>
 <body>
-    <header>
-        <button id="startStopBtn"><i class="fas fa-play"></i></button>
-        <span id= "timer"></span>
-        <span id= "carrotCnt">10</span>
-    </header>
-    <section>
-       
+    <section class="game">
+        <header>
+            <button id="startStopBtn"><i class="fas fa-play"></i></button>
+            <span id= "timer"></span>
+            <span id= "carrotCnt">10</span>
+        </header>
+        <section id="game__field">
+        
+
+        </section>
+        
+    </section>
+    <section id="game__popup">
+        <div class="redoDiv popup__hide" id="winDiv">
+            <i class="fas fa-redo-alt" id="redoBtn"></i><span>YOU WIN</span>
+        </div>
+        <div class="redoDiv popup__hide" id="loseDiv">
+            <i class="fas fa-redo-alt" id="redoBtn"></i><span>YOU LOSE</span>
+        </div>
     </section>
 </body>
 </html>
