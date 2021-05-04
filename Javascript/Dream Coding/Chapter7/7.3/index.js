@@ -12,7 +12,7 @@ let randomNum;
 timer.innerHTML = `0:${timerSec}`;
 carrotCnt.innerHTML = leftCarrotNum;
 
-function init(){
+function init(){ //세팅
     randomNum  = Math.floor(Math.random() * 10+1);
     timerSec = randomNum;
     leftCarrotNum = randomNum;
@@ -23,7 +23,7 @@ function init(){
 
 }
 
-function startClock(){
+function startClock(){ //카운트 다운 시작
     intervalFunc = setInterval(() => {
         timer.innerHTML = `0:${--timerSec}`;
         if(timerSec<=0) {  
@@ -34,26 +34,26 @@ function startClock(){
     
 }
 
-function stopClock(){
+function stopClock(){//카운트 다운 멈춤
     clearInterval(intervalFunc);
 }
 
-//startClock();
-function gameOver(){
-    stopClock();
-    setStartStopBtn(false);
-    if(leftCarrotNum>0){
+function gameOver(){ //게임 종료
+    stopClock(); //시간 멈추기
+    setStartStopBtn(false); //시작 버튼으로 바꾸기
+    if(leftCarrotNum>0){ //게임 종료되었는데 남은 당근이 있을 시에 YOU LOST DIV 보여주기
         showGameOverDiv();
-    }
+    }else showGameFinished();
 }
 
-function gameStart(){
-    init();
-    startClock();
-    setCarrot(leftCarrotNum);
-    setBug(leftCarrotNum);
+function gameStart(){ //게임 시작
+    init(); //초기화
+    startClock(); //시간초 시작
+    setCarrot(leftCarrotNum); //당근 뿌리기
+    setBug(leftCarrotNum); //벌레 뿌리기
 
 }
+
 startStopBtn.addEventListener('click',function(){
     setStartStopBtn(startStopBtnFlag);
     startStopBtnFlag?gameStart():gameOver();
@@ -61,12 +61,8 @@ startStopBtn.addEventListener('click',function(){
 });
 
 function setStartStopBtn(flag){
-    if(flag){
-        startStopBtn.innerHTML = '<i class="fas fa-stop"></i>';   
-    }else{
-        startStopBtn.innerHTML = '<i class="fas fa-play"></i>';
-        
-    }
+    startStopBtn.innerHTML = flag?'<i class="fas fa-stop"></i>' :'<i class="fas fa-play"></i>';
+     
 }
 
 function setCarrot(carrotNum){
@@ -106,7 +102,7 @@ function itemClick(event){
         leftCarrotNum--;
         carrotCnt.innerHTML = leftCarrotNum;
         if(leftCarrotNum==0){
-            showGameFinished();
+            gameOver();
         }
    }
 };
@@ -122,8 +118,6 @@ function showGameOverDiv(){
     });
     
 };
-
-
 
 function showGameFinished(){
     var redoDiv = document.createElement('div');
