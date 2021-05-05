@@ -1,9 +1,16 @@
+body {
+  text-align: center;
+  background-color: black;
+}
+
 .game {
   background: url("img/background.png") center/cover;
   width: 1000px;
   height: 600px;
   display: flex;
   flex-direction: column;
+  margin: auto;
+  border-radius: 20px;
 }
 
 header {
@@ -11,6 +18,8 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  user-select: none;
+  cursor: auto;
 }
 
 header #startStopBtn {

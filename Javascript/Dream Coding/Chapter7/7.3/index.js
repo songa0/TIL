@@ -5,12 +5,18 @@ const carrotCnt = document.querySelector('#carrotCnt');
 const startStopBtn = document.querySelector('#startStopBtn');
 const section = document.querySelector('#game__field');
 const header = document.querySelector('header');
-const loseDiv = document.querySelector('#loseDiv');
-const winDiv = document.querySelector('#winDiv');
 const redo__popup = document.querySelector('#redo__popup');
 const redo__popup__msg = redo__popup.querySelector('span');
 const IMG_WIDTH = 60;
 const IMG_HEIGHT = 60;
+
+//sound
+const carrotSound = new Audio('sound/carrot_pull.mp3');
+const bugSound = new Audio('sound/bug_pull.mp3');
+const winSound = new Audio('sound/game_win.mp3');
+const alertSound = new Audio('sound/alert.wav');
+const bgsound = new Audio('sound/bg.mp3');
+
 let startStopBtnFlag; //start
 let bugFlag = false;
 let timerSec = 0;
@@ -50,10 +56,16 @@ function gameOver(flag){ //게임 종료
     stopClock(); //시간 멈추기
     startStopBtnFlag = false;
     setStartStopBtn(startStopBtnFlag); //시작 버튼으로 바꾸기
-    
+    stopSound(bgsound);
     if(leftCarrotNum>0){ //게임 종료되었는데 남은 당근이 있을 시에 YOU LOST DIV 보여주기
         showPopup(true,'YOU LOSE');
-    }else showPopup(true,'YOU WIN');
+        
+    }else {
+        playSound(winSound);
+        showPopup(true,'YOU WIN');
+    }
+
+
 }
 
 function gameStart(){ //게임 시작
@@ -64,11 +76,13 @@ function gameStart(){ //게임 시작
     setCarrot(leftCarrotNum); //당근 뿌리기
     setBug(leftCarrotNum); //벌레 뿌리기
     showPopup(false);
+    playSound(bgsound);
 
 }
 
 function gameStop(){
    showPopup(true,'REPLAY?');
+   stopSound(bgsound);
 }
 startStopBtn.addEventListener('click',function(){
     setStartStopBtn(startStopBtnFlag);  
@@ -105,11 +119,13 @@ section.addEventListener('click',itemClick);
 function itemClick(event){
    if(event.target.classList.contains("bug")){
      bugFlag = true;
+     playSound(bugSound);
      gameOver();
    }else if(event.target.classList.contains("carrot")){ //carrot
         event.target.outerHTML = '';    
         leftCarrotNum--;
         carrotCnt.innerHTML = leftCarrotNum;
+        playSound(carrotSound);
         if(leftCarrotNum==0){
             gameOver();
         }
@@ -126,3 +142,11 @@ redo__popup.addEventListener('click',()=>{
     gameStart();
 });
 
+function playSound(sound){
+    sound.play();
+}
+
+function stopSound(sound){
+    sound.pause();
+    sound.currentTime = 0;
+}
