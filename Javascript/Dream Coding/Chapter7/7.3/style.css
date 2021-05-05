@@ -57,10 +57,16 @@ header #carrotCnt {
   width: 100%;
   height: 100%;
   margin-top: 40px;
+  position: relative;
 }
 
 #game__field img {
   position: absolute;
+  width: 60px;
+  height: 60px;
+}
+#game__field img:hover {
+  transform: scale(1.1);
 }
 
 #game__popup {
