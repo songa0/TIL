@@ -7,7 +7,13 @@ export default class Field{
         this.IMG_HEIGHT = 60;
         this.leftCarrotNum = leftCarrotNum;
         this.bugNum = bugNum;
-        this.gameField.addEventListener('click', this.itemClickEvent);
+        this.gameField.addEventListener('click',(e)=>this.itemClickEvent(e)); //여기서 this 바인딩 관련 이슈 있었음. 
+        /*this 바인딩 방법
+          this.itemClickEvent = this.itemClickEvent.bind(this)
+          arrow 함수 
+           - 위에서 사용한 방법
+           - itemClickEvent 정의할 때, itemClickEvent = event => 로 정의하여 event를 멤버변수로 만들기
+           */ 
     }
 
     addItem(className, cnt, srcPath){
@@ -24,13 +30,10 @@ export default class Field{
 
     itemClickEvent(event){
         if(event.target.matches('.bug')){
-            console.log(this.onItemClick);
             this.onItemClick && this.onItemClick('bug');
-            
         }else if(event.target.matches('.carrot')){
             event.target.outerHTML='';    
             this.leftCarrotNum--;
-            console.log(this.onItemClick);
             this.onItemClick && this.onItemClick('carrot');
         }
     }
