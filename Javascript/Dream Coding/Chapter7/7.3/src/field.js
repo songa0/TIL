@@ -1,6 +1,10 @@
 'use strict';
 
-export default class Field{
+export const ItemType = Object.freeze({
+    bug: 'bug',
+    carrot:'carrot',
+});
+export  class Field{
     constructor(leftCarrotNum, bugNum){
         this.gameField = document.querySelector('#game__field');
         this.IMG_WIDTH = 60;
@@ -30,11 +34,11 @@ export default class Field{
 
     itemClickEvent(event){
         if(event.target.matches('.bug')){
-            this.onItemClick && this.onItemClick('bug');
+            this.onItemClick && this.onItemClick(ItemType.bug);
         }else if(event.target.matches('.carrot')){
             event.target.outerHTML='';    
             this.leftCarrotNum--;
-            this.onItemClick && this.onItemClick('carrot');
+            this.onItemClick && this.onItemClick(ItemType.carrot);
         }
     }
 

@@ -1,9 +1,32 @@
 'use strict';
 
-import Field from './field.js';
+import { Field,ItemType } from './field.js';
 import * as sound from './sound.js';
 
-export default class Game{
+//Type 보장하기
+export const Reason = Object.freeze({
+    STOP : 'STOP',
+    START: 'START',
+    LOSE: 'LOSE',
+    WIN : 'WIN',
+});
+
+//Builder Pattern
+export class GameBuilder{
+    withRandomNum(randomNum){
+        this.randomNum = randomNum;
+        return this
+    }
+
+    build(){
+        return new Game(
+            this.randomNum
+        )
+    }
+}
+
+
+class Game{
     constructor(randomNum){
         this.timer = document.querySelector('#timer');
         this.carrotCnt = document.querySelector('#carrotCnt');
@@ -22,7 +45,6 @@ export default class Game{
         this.gameFieldSection = new Field(0,0);
         this.gameFieldSection.setClickListener(this.onItemClick);
         this.setStopTimeListner(this.stop);
-        this.setClickListener(this.gameStartStop);
         
     }
 
@@ -30,21 +52,20 @@ export default class Game{
         this.intervalFunc = setInterval(() => {
             this.timer.innerHTML = `0:${--this.timerSec}`;
             if(this.timerSec<=0) {  
-                this.finish();
-                
+                this.stop(Reason.LOSE);       
             }
         }, 1000);
     }
 
     onItemClick = (item) =>{
-        if(item==='bug'){
+        if(item===ItemType.bug){
          sound.playBug();
-         this.finish();
-        }else if(item === 'carrot' ){ //carrot
+         this.stop(Reason.LOSE);
+        }else if(item === ItemType.carrot ){ //carrot
              this.carrotCnt.innerHTML = this.gameFieldSection.leftCarrotNum;
              sound.playCarrot();
              if(this.gameFieldSection.leftCarrotNum==0){
-                this.finish();
+                this.stop(Reason.WIN);
              }
         }
      };
@@ -52,11 +73,7 @@ export default class Game{
     stopClock(){//카운트 다운 멈춤
         clearInterval(this.intervalFunc);
     }
-
-    setClickListener(onItemClick){
-        this.onItemClick = onItemClick;
-    }
-    
+   
     setStartStopBtn(flag){
         this.startStopBtn.innerHTML = flag? '<i class="fas fa-stop"></i>':'<i class="fas fa-play"></i>';     
     }
@@ -64,13 +81,11 @@ export default class Game{
     setStopTimeListner(stopTimeFunc){
         this.stopTimeFunc = stopTimeFunc;
     }
+
     onBtnClick(){
         this.setStartStopBtn(this.startStopBtnFlag);
-        if(this.startStopBtnFlag){
-            this.onItemClick && this.onItemClick('stop');
-        }else{
-            this.onItemClick && this.onItemClick('start');
-        }
+        this.startStopBtnFlag ? this.stop(Reason.STOP) : this.start();
+        
     }
 
     start(){ //게임 시작
@@ -79,39 +94,28 @@ export default class Game{
         this.startStopBtnFlag = true;
         this.setStartStopBtn(this.startStopBtnFlag); //정지 버튼으로 바꾸기
         this.gameFieldSection.init() //벌레, 당근 뿌리기
-        this.showPopupFunc(false);
+        this.onGameStop&&this.onGameStop(Reason.START); //FALSE
         sound.playBg();
     }
     
-    stop(){
-        this.stopClock(); //시간 멈추기
-        this.showPopupFunc(true,'REPLAY?');
-        sound.stopBg();
-    }
-    
-    finish(){ //게임 종료
+    stop(reason){
         this.stopClock(); //시간 멈추기
         this.startStopBtnFlag = false;
         this.setStartStopBtn(this.startStopBtnFlag); //시작 버튼으로 바꾸기
         sound.stopBg();
-        if(this.gameFieldSection.leftCarrotNum>0){ //게임 종료되었는데 남은 당근이 있을 시에 YOU LOST DIV 보여주기
-            this.showPopupFunc(true,'YOU LOSE');    
-        }else {
-            sound.playWin();
-            this.showPopupFunc(true,'YOU WIN');
-        }
+        this.onGameStop && this.onGameStop(reason);
     }
 
     gameStartStop =(flag) =>{
         if(flag==='stop'){
-            this.stop();
+            this.stop(Reason.START);
         }else if(flag==='start'){
             this.start();
         }
     }
     
-    setGamePopupListener(showPopupFunc){
-        this.showPopupFunc = showPopupFunc;
+    setGameStopListener(onGameStop){
+        this.onGameStop = onGameStop;
     }
     
     init(){ //세팅
