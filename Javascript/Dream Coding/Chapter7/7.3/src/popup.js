@@ -10,7 +10,7 @@ export default class PopUp{
         })
     }
 
-    showPopup(flag, text){
+    showPopup =(flag, text)=>{
         flag?this.popUp.classList.remove('popup__hide'): this.popUp.classList.add('popup__hide');
         this.popUpMsg.innerText = text?text:'';
     }
