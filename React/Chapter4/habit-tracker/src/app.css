@@ -42,3 +42,31 @@ button {
   vertical-align: baseline;
   color: darkred;
 }
+
+.habit-reset {
+  color: white;
+  background-color: green;
+  font-size: 1.5rem;
+  margin: 0 0.5em;
+  padding: 0.3em 1em;
+}
+
+.habit-input {
+  margin: 0.2em;
+  font-size: 2rem;
+}
+
+.habit-add {
+  color: white;
+  background-color: green;
+  font-size: 1.5rem;
+  padding: 0.3em;
+}
+
+.habit-header {
+  background-color: rgb(255, 242, 198);
+  font-size: 2.2rem;
+  padding: 0.6em;
+  margin-bottom: 0.6em;
+  text-align: center;
+}

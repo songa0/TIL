@@ -25,9 +25,7 @@ class Habits extends Component {
         this.setState({ habits: habits });
     }
     handleDelete = (habit) => {
-        const habits = [...this.state.habits];
-        const index = habits.indexOf(habit);
-        habits.splice(index, 1);
+        const habits = this.state.habits.filter(item => item.id !== habit.id);
         this.setState({ habits: habits });
     }
     render() {  
