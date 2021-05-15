@@ -70,3 +70,18 @@ button {
   margin-bottom: 0.6em;
   text-align: center;
 }
+.fa-leaf {
+  color: green;
+}
+
+.habit-total-count {
+  color: white;
+  background-color: green;
+  display: inline-block;
+  border-radius: 50%;
+  width: 2.5rem;
+}
+
+.habit-title {
+  padding: 0 0.3em;
+}
