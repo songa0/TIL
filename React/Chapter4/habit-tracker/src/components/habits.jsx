@@ -6,22 +6,13 @@ class Habits extends Component {
         
     };
     handleIncrement = (habit) => {
-        const habits = [...this.props.habits];
-        const index = habits.indexOf(habit);
-        habits[index].count++;
-        this.setState({ habits: habits });
-
+        this.props.onIncrement(habit);
     }
     handleDecrement = (habit) => {
-        const habits = [...this.props.habits];
-        const index = habits.indexOf(habit);
-        const count = habits[index].count - 1;
-        habits[index].count = count < 0 ? 0 : count;
-        this.setState({ habits: habits });
+        this.props.onDecrement(habit);
     }
     handleDelete = (habit) => {
-        const habits = this.props.habits.filter(item => item.id !== habit.id);
-        this.setState({ habits: habits });
+       this.props.onDelete(habit);
     }
     render() {
         const habits = this.props.habits;
