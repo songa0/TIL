@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class Habit extends Component {
+class Habit extends PureComponent {
     
 
     handleIncrement = () => {
@@ -27,7 +27,7 @@ class Habit extends Component {
                 <button className="habit-button habit-decrease" onClick={this.handleDecrement}>
                     <i className="fas fa-minus-square"></i>
                 </button>
-                <button className="habit-button habit-delete" onClick={this.handleDelete}>
+                <button className="habit-button habit-delete" onClick={this.handelDelete}>
                     <i className="fas fa-trash"></i>
                 </button>
             </li>

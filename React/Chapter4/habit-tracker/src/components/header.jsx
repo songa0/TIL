@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class Header extends Component {
+class Header extends PureComponent {
     render() {
+        
+        console.log('habitHeader');
         return (
             <header className="habit-header">
                 <i className="fas fa-leaf habit-logo"></i>
